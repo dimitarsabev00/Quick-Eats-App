@@ -1,5 +1,5 @@
 // Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
+import { getApp, getApps, initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getStorage } from "firebase/storage";
@@ -12,11 +12,12 @@ const firebaseConfig = {
   storageBucket: "quick-eats-app-1bce5.appspot.com",
   messagingSenderId: "427003913746",
   appId: "1:427003913746:web:6adea5b879d118ceb09acb",
-  measurementId: "G-J8HZR16QTQ"
+  measurementId: "G-J8HZR16QTQ",
 };
 
 // Initialize Firebase
-export const app = initializeApp(firebaseConfig);
+export const app =
+  getApps.length > 0 ? getApp() : initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
 export const storage = getStorage(app);
