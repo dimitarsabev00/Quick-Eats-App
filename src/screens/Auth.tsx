@@ -5,6 +5,10 @@ import { Input } from "../components";
 import { FaEnvelope, FaLock, FcGoogle } from "../assets/icons";
 import { motion } from "framer-motion";
 import { buttonClick } from "../assets/animations";
+import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { auth, db } from "../configs/firebase";
+import { addDoc, collection, getDocs, query, where } from "@firebase/firestore";
+import { useNavigate } from "react-router";
 
 const Auth: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -12,7 +16,29 @@ const Auth: React.FC = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
-  const signInWithGoogle = async () => {};
+  const navigate = useNavigate();
+  const signInWithGoogle = async () => {
+    const provider = new GoogleAuthProvider();
+    const {
+      user: { email, uid },
+    } = await signInWithPopup(auth, provider);
+
+    if (email) {
+      const usersRef = collection(db, "users");
+      const firestoreQuery = query(usersRef, where("uid", "==", uid));
+
+      const fetchedUser = await getDocs(firestoreQuery);
+      if (fetchedUser.docs.length === 0) {
+        await addDoc(usersRef, {
+          uid,
+          email,
+        });
+        navigate("/", { replace: true });
+      }
+
+      // save current user login in redux!!
+    }
+  };
 
   const signUpWithEmailPassword = async () => {};
 
