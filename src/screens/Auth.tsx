@@ -8,10 +8,19 @@ import { buttonClick } from "../assets/animations";
 import {
   createUserWithEmailAndPassword,
   GoogleAuthProvider,
+  signInWithEmailAndPassword,
   signInWithPopup,
 } from "firebase/auth";
 import { auth, db } from "../configs/firebase";
-import { addDoc, collection, getDocs, query, where } from "@firebase/firestore";
+import {
+  addDoc,
+  collection,
+  doc,
+  getDoc,
+  getDocs,
+  query,
+  where,
+} from "@firebase/firestore";
 import { useNavigate } from "react-router";
 
 const Auth: React.FC = () => {
@@ -108,7 +117,43 @@ const Auth: React.FC = () => {
     }
   };
 
-  const signInWithEmailPassword = async () => {};
+  const signInWithEmailPassword = async () => {
+    if (email !== "" && password !== "") {
+      try {
+        const userCredential = await signInWithEmailAndPassword(
+          auth,
+          email,
+          password
+        );
+        const tryLogInUser = userCredential?.user;
+
+        if (!tryLogInUser) {
+          console.log("Еmail or password is incorrect!");
+          return;
+        }
+        if (userCredential) {
+          const q = query(
+            collection(db, "users"),
+            where("uid", "==", tryLogInUser.uid)
+          );
+          const querySnapshot = await getDocs(q);
+
+          querySnapshot.forEach((doc) => {
+            const userData = doc.data();
+            localStorage.setItem("user-info", JSON.stringify(userData));
+
+            // save current user login in redux!!
+
+            navigate("/");
+          });
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    } else {
+      console.log("Password doesn't match");
+    }
+  };
 
   return (
     <div className="w-screen h-screen relative overflow-hidden flex">
