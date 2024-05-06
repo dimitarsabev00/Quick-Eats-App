@@ -22,6 +22,8 @@ import {
   where,
 } from "@firebase/firestore";
 import { useNavigate } from "react-router";
+import { useAppDispatch } from "../store/hooks";
+import { login } from "../store";
 
 const Auth: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -30,6 +32,8 @@ const Auth: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState(false);
 
   const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     const {
@@ -53,10 +57,10 @@ const Auth: React.FC = () => {
         await addDoc(usersRef, userDoc);
         localStorage.setItem("user-info", JSON.stringify(userDoc));
 
+        dispatch(login({ ...userDoc }));
+
         navigate("/", { replace: true });
       }
-
-      // save current user login in redux!!
     }
   };
 
@@ -103,8 +107,7 @@ const Auth: React.FC = () => {
 
           await addDoc(usersRef, userDoc);
           localStorage.setItem("user-info", JSON.stringify(userDoc));
-
-          // save current user login in redux!!
+          dispatch(login({ ...userDoc }));
 
           navigate("/");
         } catch (error) {
@@ -141,6 +144,7 @@ const Auth: React.FC = () => {
           querySnapshot.forEach((doc) => {
             const userData = doc.data();
             localStorage.setItem("user-info", JSON.stringify(userData));
+            dispatch(login({ ...userData }));
 
             // save current user login in redux!!
 
