@@ -5,16 +5,20 @@ import { Input } from "../components";
 import { FaEnvelope, FaLock, FcGoogle } from "../assets/icons";
 import { motion } from "framer-motion";
 import { buttonClick } from "../assets/animations";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
 import { auth, db } from "../configs/firebase";
 import { addDoc, collection, getDocs, query, where } from "@firebase/firestore";
 import { useNavigate } from "react-router";
 
 const Auth: React.FC = () => {
   const [email, setEmail] = useState("");
-  const [isSignUp, setIsSignUp] = useState(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [isSignUp, setIsSignUp] = useState(false);
 
   const navigate = useNavigate();
   const signInWithGoogle = async () => {
@@ -29,10 +33,17 @@ const Auth: React.FC = () => {
 
       const fetchedUser = await getDocs(firestoreQuery);
       if (fetchedUser.docs.length === 0) {
-        await addDoc(usersRef, {
+        const userDoc = {
           uid,
           email,
-        });
+          photoURL:
+            "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png",
+          createdAt: Date.now(),
+        };
+
+        await addDoc(usersRef, userDoc);
+        localStorage.setItem("user-info", JSON.stringify(userDoc));
+
         navigate("/", { replace: true });
       }
 
@@ -40,7 +51,62 @@ const Auth: React.FC = () => {
     }
   };
 
-  const signUpWithEmailPassword = async () => {};
+  const signUpWithEmailPassword = async () => {
+    setEmail("");
+    setPassword("");
+    setConfirmPassword("");
+
+    if (email === "" || password === "" || confirmPassword === "") {
+      console.log("Required fields should not be empty");
+    } else {
+      if (password === confirmPassword) {
+        const usersRef = collection(db, "users");
+
+        const q = query(usersRef, where("email", "==", email));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          console.log("Email already exists");
+          return;
+        }
+
+        try {
+          const newUserCredential = await createUserWithEmailAndPassword(
+            auth,
+            email,
+            password
+          );
+
+          const newUser = newUserCredential?.user;
+
+          if (!newUser) {
+            console.log("Email already exists");
+            return;
+          }
+
+          const userDoc = {
+            uid: newUser.uid,
+            email: email,
+            photoURL:
+              "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png",
+            createdAt: Date.now(),
+          };
+
+          await addDoc(usersRef, userDoc);
+          localStorage.setItem("user-info", JSON.stringify(userDoc));
+
+          // save current user login in redux!!
+
+          navigate("/");
+        } catch (error) {
+          console.log(error);
+        } finally {
+        }
+      } else {
+        console.log("Password doesn't match");
+      }
+    }
+  };
 
   const signInWithEmailPassword = async () => {};
 
