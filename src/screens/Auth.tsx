@@ -15,8 +15,6 @@ import { auth, db } from "../configs/firebase";
 import {
   addDoc,
   collection,
-  doc,
-  getDoc,
   getDocs,
   query,
   where,
@@ -146,7 +144,6 @@ const Auth: React.FC = () => {
             localStorage.setItem("user-info", JSON.stringify(userData));
             dispatch(login({ ...userData }));
 
-            // save current user login in redux!!
 
             navigate("/");
           });
