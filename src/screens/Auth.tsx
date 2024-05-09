@@ -12,16 +12,8 @@ import {
   signInWithPopup,
 } from "firebase/auth";
 import { auth, db } from "../configs/firebase";
-import {
-  addDoc,
-  collection,
-  getDocs,
-  query,
-  where,
-} from "@firebase/firestore";
+import { addDoc, collection, getDocs, query, where } from "@firebase/firestore";
 import { useNavigate } from "react-router";
-import { useAppDispatch } from "../store/hooks";
-import { login } from "../store";
 
 const Auth: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -30,7 +22,6 @@ const Auth: React.FC = () => {
   const [isSignUp, setIsSignUp] = useState(false);
 
   const navigate = useNavigate();
-  const dispatch = useAppDispatch();
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
@@ -55,7 +46,7 @@ const Auth: React.FC = () => {
         await addDoc(usersRef, userDoc);
         localStorage.setItem("user-info", JSON.stringify(userDoc));
 
-        dispatch(login({ ...userDoc }));
+        // save login user in redux!!
 
         navigate("/", { replace: true });
       }
@@ -105,9 +96,10 @@ const Auth: React.FC = () => {
 
           await addDoc(usersRef, userDoc);
           localStorage.setItem("user-info", JSON.stringify(userDoc));
-          dispatch(login({ ...userDoc }));
 
-          navigate("/");
+          // save login user in redux!!
+
+          navigate("/", { replace: true });
         } catch (error) {
           console.log(error);
         } finally {
@@ -142,10 +134,9 @@ const Auth: React.FC = () => {
           querySnapshot.forEach((doc) => {
             const userData = doc.data();
             localStorage.setItem("user-info", JSON.stringify(userData));
-            dispatch(login({ ...userData }));
+            // save login user in redux!!
 
-
-            navigate("/");
+            navigate("/", { replace: true });
           });
         }
       } catch (error) {
