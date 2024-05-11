@@ -1,20 +1,33 @@
 import React, { useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import { Avatar, Logo } from "../assets/";
 import { isActiveStyles, isNotActiveStyles } from "../utils/helpers";
 import { motion } from "framer-motion";
 import { buttonClick, slideTop } from "../assets/animations";
 import { MdLogout, MdShoppingCart } from "../assets/icons";
-import { useAuthState } from "react-firebase-hooks/auth";
+import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "../configs/firebase";
+import { toast } from "react-hot-toast";
+import { useAppDispatch } from "../store/hooks";
+import { logout } from "../store";
 
 const Header: React.FC = () => {
   const [user] = useAuthState(auth);
+  const [signOut] = useSignOut(auth);
 
   const [isMenu, setIsMenu] = useState(false);
 
-  const signOut = () => {
-    console.log("Try signOut");
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const logOut = async () => {
+    try {
+      await signOut();
+      localStorage.removeItem("user-info");
+      dispatch(logout());
+      navigate("/auth", { replace: true });
+    } catch (error: any) {
+      toast.error(error.message);
+    }
   };
 
   return (
@@ -111,7 +124,7 @@ const Header: React.FC = () => {
 
                   <motion.div
                     {...buttonClick}
-                    onClick={signOut}
+                    onClick={logOut}
                     className="group flex items-center justify-center px-3 py-2 rounded-md shadow-md bg-gray-100 hover:bg-gray-200 gap-3"
                   >
                     <MdLogout className="text-2xl text-textColor group-hover::text-headingColor" />

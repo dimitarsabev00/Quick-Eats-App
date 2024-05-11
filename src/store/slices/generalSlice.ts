@@ -3,7 +3,7 @@ import store from "..";
 import { GeneralSliceInitialState } from "../../Types";
 
 const initialState: GeneralSliceInitialState = {
-  authUser: JSON.parse(localStorage.getItem("user-info") || "null") || {},
+  authUser: JSON.parse(localStorage.getItem("user-info") || "null") || null,
   isLoading: false,
 };
 
@@ -16,10 +16,14 @@ export const generalSlice = createSlice({
     login: (state, action) => {
       state.authUser = action.payload;
     },
+    logout: (state) => {
+      state.authUser = null;
+    },
   },
 });
 
-export const { startLoading, stopLoading, login } = generalSlice.actions;
+export const { startLoading, stopLoading, login, logout } =
+  generalSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
