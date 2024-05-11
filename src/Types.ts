@@ -1,5 +1,5 @@
 export interface GeneralSliceInitialState {
-  authUser: CurrentUser;
+  authUser: CurrentUser | null;
   isLoading: boolean;
 }
 
