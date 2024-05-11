@@ -4,23 +4,22 @@ import { GeneralSliceInitialState } from "../../Types";
 
 const initialState: GeneralSliceInitialState = {
   authUser: JSON.parse(localStorage.getItem("user-info") || "null") || {},
-  loading: false,
-
+  isLoading: false,
 };
 
 export const generalSlice = createSlice({
   name: "generalSlice",
   initialState,
   reducers: {
-    startLoading: (state) => ({ ...state, loading: true }),
-    stopLoading: (state) => ({ ...state, loading: false }),
+    startLoading: (state) => ({ ...state, isLoading: true }),
+    stopLoading: (state) => ({ ...state, isLoading: false }),
     login: (state, action) => {
       state.authUser = action.payload;
     },
   },
 });
 
-export const { login } = generalSlice.actions;
+export const { , login } = generalSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
