@@ -3,6 +3,7 @@ import { Auth, Main } from "../screens";
 import { auth } from "../configs/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { ReactNode } from "react";
+import { Toaster } from "react-hot-toast";
 
 const RoutesComp = () => {
   const [user] = useAuthState(auth);
@@ -21,6 +22,7 @@ const RoutesComp = () => {
   };
 
   return (
+    <>
     <Routes>
       <Route
         path="/*"
@@ -39,6 +41,8 @@ const RoutesComp = () => {
         }
       />
     </Routes>
+    <Toaster position="bottom-right"/>
+    </>
   );
 };
 
