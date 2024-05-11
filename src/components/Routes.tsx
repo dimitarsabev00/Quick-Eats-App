@@ -23,25 +23,18 @@ const RoutesComp = () => {
 
   return (
     <>
-    <Routes>
-      <Route
-        path="/*"
-        element={
-          <PrivateRoute>
-            <Main />
-          </PrivateRoute>
-        }
-      />
-      <Route
-        path="/auth"
-        element={
-          <AuthRoute>
-            <Auth />
-          </AuthRoute>
-        }
-      />
-    </Routes>
-    <Toaster position="bottom-right"/>
+      <Routes>
+        <Route path="/*" element={<Main />} />
+        <Route
+          path="/auth"
+          element={
+            <AuthRoute>
+              <Auth />
+            </AuthRoute>
+          }
+        />
+      </Routes>
+      <Toaster position="bottom-right" />
     </>
   );
 };
