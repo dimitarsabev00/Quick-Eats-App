@@ -19,7 +19,7 @@ export const generalSlice = createSlice({
   },
 });
 
-export const { , login } = generalSlice.actions;
+export const { startLoading, stopLoading, login } = generalSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
