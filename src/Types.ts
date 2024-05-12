@@ -1,6 +1,7 @@
 export interface GeneralSliceInitialState {
   authUser: CurrentUser | null;
   isLoading: boolean;
+  products: Product[];
 }
 
 interface CurrentUser {
