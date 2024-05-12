@@ -4,7 +4,7 @@ import { fadeInOut } from "../assets/animations";
 
 type InputProps = {
   placeHolder: string;
-  icon: React.ReactNode;
+  icon?: React.ReactNode;
   value: string;
   handleOnChange: React.Dispatch<React.SetStateAction<string>>;
   type: "text" | "password" | "email" | "number";
