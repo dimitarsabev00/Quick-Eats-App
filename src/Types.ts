@@ -1,10 +1,11 @@
 export interface GeneralSliceInitialState {
-  authUser: CurrentUser | null;
+  authUser: User | null;
   isLoading: boolean;
   products: Product[];
+  allUsers: User[];
 }
 
-interface CurrentUser {
+export interface User {
   createdAt: number;
   uid: number;
   email: string;
