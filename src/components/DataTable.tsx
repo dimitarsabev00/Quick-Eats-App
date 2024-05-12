@@ -1,14 +1,7 @@
 import React from "react";
 import MaterialTable, { Action, Column } from "material-table";
 import { ThemeProvider, createTheme } from "@mui/material";
-
-interface Product {
-  imageURL: string;
-  product_name: string;
-  product_category: string;
-  product_price: string;
-  productId: string;
-}
+import { Product } from "../Types";
 
 type ProductAction = Action<Product>;
 
