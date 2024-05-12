@@ -12,6 +12,7 @@ import {
 import { db } from "../../configs/firebase";
 import { setAllProducts } from "../../store";
 import { toast } from "react-hot-toast";
+import { Product } from "../../Types";
 
 const DBItems: React.FC = () => {
   const products = useAppSelector(({ generalSlice }) => generalSlice.products);
@@ -27,9 +28,13 @@ const DBItems: React.FC = () => {
 
       const productsQuery = query(collection(db, "products"));
       const querySnapshot = await getDocs(productsQuery);
-      const allProducts = querySnapshot.docs.map((doc) => ({
+      const allProducts: Product[] = querySnapshot.docs.map((doc) => ({
         id: doc.id,
-        ...doc.data(),
+        productId: doc.id,
+        imageURL: doc.data().imageURL,
+        product_name: doc.data().product_name,
+        product_category: doc.data().product_category,
+        product_price: doc.data().product_price,
       }));
       dispatch(setAllProducts(allProducts));
     } catch (error: any) {
