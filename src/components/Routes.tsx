@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes, useLocation } from "react-router";
-import { Auth, Main } from "../screens";
+import { Auth, Dashboard, Main } from "../screens";
 import { auth } from "../configs/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { ReactNode } from "react";
@@ -33,6 +33,7 @@ const RoutesComp = () => {
             </AuthRoute>
           }
         />
+        <Route path="/dashboard/*" element={<Dashboard />} />
       </Routes>
       <Toaster position="bottom-right" />
     </>
