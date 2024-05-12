@@ -8,10 +8,10 @@ type ProductAction = Action<Product>;
 type ProductColumn = Column<Product>;
 
 type DataTableProps = {
-  columns: ProductColumn[];
-  data: Product[];
+  columns: any[];
+  data: any[];
   title: string;
-  actions: ProductAction[];
+  actions: any[];
 };
 
 const DataTable: React.FC<DataTableProps> = ({
