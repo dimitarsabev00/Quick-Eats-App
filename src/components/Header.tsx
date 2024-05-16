@@ -9,7 +9,7 @@ import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "../configs/firebase";
 import { toast } from "react-hot-toast";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { logout } from "../store";
+import { logout, showShoppingCart } from "../store";
 
 const Header: React.FC = () => {
   const [user] = useAuthState(auth);
@@ -76,11 +76,17 @@ const Header: React.FC = () => {
           </NavLink>
         </ul>
 
-        <motion.div {...buttonClick} className="relative cursor-pointer">
+        <motion.div
+          {...buttonClick}
+          onClick={() => dispatch(showShoppingCart())}
+          className="relative cursor-pointer"
+        >
           <MdShoppingCart className="text-3xl text-textColor" />
           {shoppingCart.length > 0 && (
             <div className="w-6 h-6 rounded-full bg-red-500 flex items-center justify-center absolute -top-4 -right-1">
-              <p className="text-primary text-base font-semibold">{shoppingCart.length}</p>
+              <p className="text-primary text-base font-semibold">
+                {shoppingCart.length}
+              </p>
             </div>
           )}
         </motion.div>

@@ -16,7 +16,8 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
   const dispatch = useAppDispatch();
 
   const addProductToShoppingCart = () => {
-    dispatch(addProduct(data));
+    const newProductInShoppingCart = { ...data, quantity: 1 };
+    dispatch(addProduct(newProductInShoppingCart));
     toast.success("Added to the cart");
   };
 
@@ -29,7 +30,7 @@ const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
         </p>
         <p className="text-lg font-semibold text-red-500 flex items-center justify-center gap-1">
           <HiCurrencyDollar className="text-red-500" />{" "}
-          {parseFloat(data.product_price).toFixed(2)}
+          {data.product_price.toFixed(2)}
         </p>
 
         <motion.div

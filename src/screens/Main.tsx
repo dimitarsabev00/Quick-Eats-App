@@ -5,9 +5,14 @@ import { db } from "../configs/firebase";
 import { Product } from "../Types";
 import { setAllProducts } from "../store";
 import { useEffect } from "react";
+import ShoppingCart from "../components/ShoppingCart";
 
 const Main = () => {
   const products = useAppSelector(({ generalSlice }) => generalSlice.products);
+  const isShoppingCartVisible = useAppSelector(
+    ({ generalSlice }) => generalSlice.isShoppingCartVisible
+  );
+
   const dispatch = useAppDispatch();
 
   const getAllProducts = async () => {
@@ -40,6 +45,8 @@ const Main = () => {
         <HomeSLider />
         <FilterSection />
       </div>
+
+      {isShoppingCartVisible && <ShoppingCart />}
     </main>
   );
 };

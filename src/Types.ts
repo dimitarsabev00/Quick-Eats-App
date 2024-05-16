@@ -3,7 +3,8 @@ export interface GeneralSliceInitialState {
   isLoading: boolean;
   products: Product[];
   allUsers: User[];
-  shoppingCart: Product[];
+  shoppingCart: ShoppingCartProduct[];
+  isShoppingCartVisible: boolean;
 }
 
 export interface User {
@@ -17,7 +18,7 @@ export interface Product {
   imageURL: string;
   product_name: string;
   product_category: string;
-  product_price: string;
+  product_price: number;
   productId: string;
 }
 export interface ShoppingCartProduct {
