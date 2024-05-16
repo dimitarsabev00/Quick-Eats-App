@@ -3,6 +3,7 @@ export interface GeneralSliceInitialState {
   isLoading: boolean;
   products: Product[];
   allUsers: User[];
+  shoppingCart: Product[];
 }
 
 export interface User {
