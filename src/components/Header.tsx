@@ -8,7 +8,7 @@ import { MdLogout, MdShoppingCart } from "../assets/icons";
 import { useAuthState, useSignOut } from "react-firebase-hooks/auth";
 import { auth } from "../configs/firebase";
 import { toast } from "react-hot-toast";
-import { useAppDispatch } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { logout } from "../store";
 
 const Header: React.FC = () => {
@@ -30,6 +30,9 @@ const Header: React.FC = () => {
     }
   };
 
+  const shoppingCart = useAppSelector(
+    ({ generalSlice }) => generalSlice.shoppingCart
+  );
   return (
     <header className="fixed backdrop-blur-md z-50 inset-x-0 top-0 flex items-center justify-between px-12 md:px-20 py-6">
       <NavLink to={"/"} className="flex items-center justify-center gap-4">
@@ -75,9 +78,11 @@ const Header: React.FC = () => {
 
         <motion.div {...buttonClick} className="relative cursor-pointer">
           <MdShoppingCart className="text-3xl text-textColor" />
-          <div className="w-6 h-6 rounded-full bg-red-500 flex items-center justify-center absolute -top-4 -right-1">
-            <p className="text-primary text-base font-semibold">2</p>
-          </div>
+          {shoppingCart.length > 0 && (
+            <div className="w-6 h-6 rounded-full bg-red-500 flex items-center justify-center absolute -top-4 -right-1">
+              <p className="text-primary text-base font-semibold">{shoppingCart.length}</p>
+            </div>
+          )}
         </motion.div>
 
         {user ? (
