@@ -9,6 +9,7 @@ import {
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { ShoppingCartProduct } from "../Types";
 import {
+  checkOutShoppingCart,
   decrementProductQuantity,
   hideShoppingCart,
   incrementProductQuantity,
@@ -32,7 +33,9 @@ const ShoppingCart: React.FC = () => {
     }
   }, [shoppingCart]);
 
-  const handleCheckOut = () => {};
+  const handleCheckOut = () => {
+    dispatch(checkOutShoppingCart());
+  };
 
   return (
     <motion.div

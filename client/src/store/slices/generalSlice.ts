@@ -14,7 +14,7 @@ const initialState: GeneralSliceInitialState = {
   allUsers: [],
   shoppingCart: [],
   isShoppingCartVisible: false,
-  orders:[]
+  orders: [],
 };
 
 export const generalSlice = createSlice({
@@ -36,7 +36,9 @@ export const generalSlice = createSlice({
       state.allUsers = action.payload;
     },
     addProduct: (state, action: PayloadAction<ShoppingCartProduct>) => {
-      const productIndex = state.shoppingCart.findIndex(p => p.productId === action.payload.productId);
+      const productIndex = state.shoppingCart.findIndex(
+        (p) => p.productId === action.payload.productId
+      );
       if (productIndex >= 0) {
         state.shoppingCart[productIndex].quantity += action.payload.quantity;
       } else {
@@ -69,6 +71,9 @@ export const generalSlice = createSlice({
         );
       }
     },
+    checkOutShoppingCart: (state) => {
+      state.shoppingCart = [];
+    },
   },
 });
 
@@ -84,6 +89,7 @@ export const {
   hideShoppingCart,
   incrementProductQuantity,
   decrementProductQuantity,
+  checkOutShoppingCart,
 } = generalSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>;
