@@ -1,8 +1,8 @@
 import { motion } from "framer-motion";
 import React from "react";
-import { HiCurrencyDollar } from "react-icons/hi2";
+import { HiCurrencyDollar } from "../assets/icons";
 import { buttonClick } from "../assets/animations";
-import { IoBasket } from "react-icons/io5";
+import { IoBasket } from "../assets/icons";
 import { Product } from "../Types";
 import { useAppDispatch } from "../store/hooks";
 import { addProduct } from "../store";

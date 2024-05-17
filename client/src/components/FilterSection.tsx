@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { IoFastFood } from "react-icons/io5";
+import { IoFastFood } from "../assets/icons";
 import { useAppSelector } from "../store/hooks";
 import { staggerFadeInOut } from "../assets/animations";
 import { statuses } from "../utils/helpers";
