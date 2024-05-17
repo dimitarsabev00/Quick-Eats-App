@@ -7,6 +7,9 @@ import { Request, Response, NextFunction } from "express";
 
 import serviceAccountKey from "./serviceAccountKey.json";
 
+import userRouter from "./routes/user"
+
+
 dotenv.config();
 
 const app = express();
@@ -30,5 +33,7 @@ admin.initializeApp({
 app.get("/", (req: Request, res: Response) => {
   return res.send("The Server Is Running!");
 });
+
+app.use("/api/users", userRouter);
 
 exports.app = functions.https.onRequest(app);
