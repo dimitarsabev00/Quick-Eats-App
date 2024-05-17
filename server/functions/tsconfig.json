@@ -1,15 +1,17 @@
 {
   "compilerOptions": {
+    "target": "ES6",
     "module": "commonjs",
+    "resolveJsonModule": true,
+    "esModuleInterop": true,
     "noImplicitReturns": true,
     "noUnusedLocals": true,
     "outDir": "lib",
     "sourceMap": true,
     "strict": true,
-    "target": "es2017"
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true
   },
   "compileOnSave": true,
-  "include": [
-    "src"
-  ]
+  "include": ["src"]
 }
