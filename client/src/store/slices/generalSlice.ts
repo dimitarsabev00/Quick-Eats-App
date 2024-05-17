@@ -14,6 +14,7 @@ const initialState: GeneralSliceInitialState = {
   allUsers: [],
   shoppingCart: [],
   isShoppingCartVisible: false,
+  orders:[]
 };
 
 export const generalSlice = createSlice({
