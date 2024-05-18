@@ -12,10 +12,10 @@ import {
   ref,
   uploadBytesResumable,
 } from "@firebase/storage";
-import { db, storage } from "../../configs/firebase";
+import { storage } from "../../configs/firebase";
 import { toast } from "react-hot-toast";
 import { setAllProducts, startLoading, stopLoading } from "../../store";
-import { addDoc, collection, getDocs, query } from "@firebase/firestore";
+import { addNewProduct, getAllProducts } from "../../api";
 
 const DBNewItem: React.FC = () => {
   const [itemName, setItemName] = useState("");
@@ -81,11 +81,10 @@ const DBNewItem: React.FC = () => {
       product_category: category,
       product_price: Number(price),
       imageURL: imageDownloadURL,
-      createdAt: Date.now(),
     };
 
     try {
-      await addDoc(collection(db, "products"), productData);
+      await addNewProduct(productData);
       toast.success("New Item added successfully");
 
       setImageDownloadURL(null);
@@ -93,16 +92,10 @@ const DBNewItem: React.FC = () => {
       setPrice("");
       setCategory(null);
 
-      // Fetch all products from Firestore
-      const productsQuery = query(collection(db, "products"));
-      const querySnapshot = await getDocs(productsQuery);
-      const allProducts = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        ...doc.data(),
-      }));
+      const allProducts = await getAllProducts();
       dispatch(setAllProducts(allProducts));
-    } catch (error) {
-      console.error("Error adding document: ", error);
+    } catch (error: any) {
+      toast.error(error);
       toast.error("Failed to add new item");
     }
 
