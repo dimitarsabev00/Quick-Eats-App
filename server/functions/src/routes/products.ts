@@ -16,9 +16,9 @@ router.post("/create", async (req: Request, res: Response) => {
     const productId = Date.now();
     const data = {
       productId,
-      productName: req.body.product_name,
-      productCategory: req.body.product_category,
-      productPrice: req.body.product_price,
+      product_name: req.body.product_name,
+      product_category: req.body.product_category,
+      product_price: req.body.product_price,
       imageURL: req.body.imageURL,
       createdAt: Date.now(),
     };
