@@ -37,3 +37,15 @@ export const getAllProducts = async () => {
     toast.error(err);
   }
 };
+
+// delete product
+export const deleteProduct = async (productId: number) => {
+  try {
+    const res = await axios.delete(
+      `${baseURL}/api/products/delete/${productId}`
+    );
+    return res.data.data;
+  } catch (err) {
+    return null;
+  }
+};
