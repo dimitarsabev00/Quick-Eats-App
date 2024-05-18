@@ -131,9 +131,13 @@ const Auth: React.FC = () => {
         const tryLogInUser = userCredential?.user;
 
         if (!tryLogInUser) {
-          console.log("Еmail or password is incorrect!");
+          toast.error("Еmail or password is incorrect!");
           return;
         }
+
+        const token = await tryLogInUser.getIdToken();
+        await validateUserJWTToken(token);
+
         if (userCredential) {
           const q = query(
             collection(db, "users"),
@@ -149,11 +153,11 @@ const Auth: React.FC = () => {
             navigate("/", { replace: true });
           });
         }
-      } catch (error) {
-        console.log(error);
+      } catch (error: any) {
+        toast.error(error);
       }
     } else {
-      console.log("Password doesn't match");
+      toast.error("Password doesn't match");
     }
   };
 
