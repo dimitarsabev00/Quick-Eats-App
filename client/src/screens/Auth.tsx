@@ -14,6 +14,8 @@ import {
 import { auth, db } from "../configs/firebase";
 import { addDoc, collection, getDocs, query, where } from "@firebase/firestore";
 import { useNavigate } from "react-router";
+import { validateUserJWTToken } from "../api";
+import { toast } from "react-hot-toast";
 
 const Auth: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -25,16 +27,19 @@ const Auth: React.FC = () => {
 
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    const {
-      user: { email, uid },
-    } = await signInWithPopup(auth, provider);
+    try {
+      const {
+        user: { email, uid, accessToken },
+      } = await signInWithPopup(auth, provider);
+      await validateUserJWTToken(accessToken);
 
-    if (email) {
       const usersRef = collection(db, "users");
       const firestoreQuery = query(usersRef, where("uid", "==", uid));
 
       const fetchedUser = await getDocs(firestoreQuery);
-      if (fetchedUser.docs.length === 0) {
+      const notFoundUsers = fetchedUser.docs.length === 0;
+
+      if (notFoundUsers) {
         const userDoc = {
           uid,
           email,
@@ -50,6 +55,8 @@ const Auth: React.FC = () => {
 
         navigate("/", { replace: true });
       }
+    } catch (error: any) {
+      toast.error(error);
     }
   };
 
