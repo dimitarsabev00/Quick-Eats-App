@@ -2,45 +2,15 @@ import React from "react";
 import { DataTable } from "..";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
 import { HiCurrencyDollar } from "../../assets/icons";
-import {
-  collection,
-  deleteDoc,
-  doc,
-  getDocs,
-  query,
-} from "@firebase/firestore";
-import { db } from "../../configs/firebase";
 import { setAllProducts } from "../../store";
 import { toast } from "react-hot-toast";
-import { Product } from "../../Types";
+import { deleteProduct, getAllProducts } from "../../api";
 
 const DBItems: React.FC = () => {
   const products = useAppSelector(({ generalSlice }) => generalSlice.products);
   const mutableData = products.map((product) => ({ ...product }));
 
   const dispatch = useAppDispatch();
-  const deleteProduct = async (productId: string) => {
-    try {
-      await deleteDoc(doc(db, "products", productId));
-      toast.success("Product Deleted");
-
-      // Fetch all products from Firestore
-
-      const productsQuery = query(collection(db, "products"));
-      const querySnapshot = await getDocs(productsQuery);
-      const allProducts: Product[] = querySnapshot.docs.map((doc) => ({
-        id: doc.id,
-        productId: doc.id,
-        imageURL: doc.data().imageURL,
-        product_name: doc.data().product_name,
-        product_category: doc.data().product_category,
-        product_price: doc.data().product_price,
-      }));
-      dispatch(setAllProducts(allProducts));
-    } catch (error: any) {
-      toast.error("Failed to delete the product: " + error.message);
-    }
-  };
 
   return (
     <div className="flex items-center justify-self-center gap-4 pt-6 w-full">
@@ -88,11 +58,19 @@ const DBItems: React.FC = () => {
           {
             icon: "delete",
             tooltip: "Delete Data",
-            onClick: (event, rowData) => {
+            onClick: async (event, rowData) => {
               if (
                 window.confirm("Are you sure, you want to perform this action")
               ) {
-                deleteProduct(rowData.id);
+                try {
+                  await deleteProduct(rowData.productId);
+                  toast.success("Product Deleted");
+
+                  const allProducts = await getAllProducts();
+                  dispatch(setAllProducts(allProducts));
+                } catch (error: any) {
+                  toast.error("Failed to delete the product: " + error.message);
+                }
               }
             },
           },
