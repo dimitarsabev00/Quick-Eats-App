@@ -51,4 +51,17 @@ router.get("/all", async (req, res) => {
   }
 });
 
+router.delete("/delete/:productId", async (req, res) => {
+  const productId = req.params.productId;
+  try {
+    const result = await db
+      .collection("products")
+      .doc(`/${productId}/`)
+      .delete();
+    return res.status(200).send({ success: true, data: result });
+  } catch (err) {
+    return res.send({ success: false, msg: `Error :${err}` });
+  }
+});
+
 export default router;
