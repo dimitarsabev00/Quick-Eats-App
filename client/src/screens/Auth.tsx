@@ -66,7 +66,7 @@ const Auth: React.FC = () => {
     setConfirmPassword("");
 
     if (email === "" || password === "" || confirmPassword === "") {
-      console.log("Required fields should not be empty");
+      toast.error("Required fields should not be empty");
     } else {
       if (password === confirmPassword) {
         const usersRef = collection(db, "users");
@@ -92,7 +92,7 @@ const Auth: React.FC = () => {
             console.log("Email already exists");
             return;
           }
-          const token = await newUser.getIdToken()
+          const token = await newUser.getIdToken();
 
           await validateUserJWTToken(token);
 
@@ -115,7 +115,7 @@ const Auth: React.FC = () => {
         } finally {
         }
       } else {
-        console.log("Password doesn't match");
+        toast.error("Password doesn't match");
       }
     }
   };
