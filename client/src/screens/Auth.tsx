@@ -92,6 +92,9 @@ const Auth: React.FC = () => {
             console.log("Email already exists");
             return;
           }
+          const token = await newUser.getIdToken()
+
+          await validateUserJWTToken(token);
 
           const userDoc = {
             uid: newUser.uid,
@@ -107,8 +110,8 @@ const Auth: React.FC = () => {
           // save login user in redux!!
 
           navigate("/", { replace: true });
-        } catch (error) {
-          console.log(error);
+        } catch (error: any) {
+          toast.error(error);
         } finally {
         }
       } else {
