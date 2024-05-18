@@ -1,34 +1,18 @@
 import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { collection, getDocs, query } from "@firebase/firestore";
-import { db } from "../../configs/firebase";
 import { setAllProducts } from "../../store";
 import { CChart } from "@coreui/react-chartjs";
-import { Product } from "../../Types";
+import { getAllProducts } from "../../api";
 
 const DBHome: React.FC = () => {
   const products = useAppSelector(({ generalSlice }) => generalSlice.products);
   const dispatch = useAppDispatch();
 
-  const getAllProducts = async () => {
-    // Fetch all products from Firestore
-
-    const productsQuery = query(collection(db, "products"));
-    const querySnapshot = await getDocs(productsQuery);
-    const allProducts: Product[] = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      productId: doc.id,
-      imageURL: doc.data().imageURL,
-      product_name: doc.data().product_name,
-      product_category: doc.data().product_category,
-      product_price: doc.data().product_price,
-    }));
-    dispatch(setAllProducts(allProducts));
-  };
-
   useEffect(() => {
     if (!products.length) {
-      getAllProducts();
+      getAllProducts().then((allProducts) =>
+        dispatch(setAllProducts(allProducts))
+      );
     }
   }, []);
 

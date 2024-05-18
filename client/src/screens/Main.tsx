@@ -1,11 +1,9 @@
-import { collection, getDocs, query } from "firebase/firestore";
 import { FilterSection, Header, Home, HomeSLider } from "../components";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
-import { db } from "../configs/firebase";
-import { Product } from "../Types";
 import { setAllProducts } from "../store";
 import { useEffect } from "react";
 import ShoppingCart from "../components/ShoppingCart";
+import { getAllProducts } from "../api";
 
 const Main = () => {
   const products = useAppSelector(({ generalSlice }) => generalSlice.products);
@@ -15,25 +13,11 @@ const Main = () => {
 
   const dispatch = useAppDispatch();
 
-  const getAllProducts = async () => {
-    // Fetch all products from Firestore
-
-    const productsQuery = query(collection(db, "products"));
-    const querySnapshot = await getDocs(productsQuery);
-    const allProducts: Product[] = querySnapshot.docs.map((doc) => ({
-      id: doc.id,
-      productId: doc.id,
-      imageURL: doc.data().imageURL,
-      product_name: doc.data().product_name,
-      product_category: doc.data().product_category,
-      product_price: doc.data().product_price,
-    }));
-    dispatch(setAllProducts(allProducts));
-  };
-
   useEffect(() => {
     if (!products.length) {
-      getAllProducts();
+      getAllProducts().then((allProducts) =>
+        dispatch(setAllProducts(allProducts))
+      );
     }
   }, []);
 
