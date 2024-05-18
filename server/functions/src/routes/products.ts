@@ -34,4 +34,21 @@ router.post("/create", async (req: Request, res: Response) => {
   }
 });
 
+router.get("/all", async (req, res) => {
+  try {
+    let query = db.collection("products");
+    let response: any = [];
+    let querysnap = await query.get();
+    let docs = querysnap.docs;
+
+    docs.forEach((doc) => {
+      response.push({ ...doc.data() });
+    });
+
+    res.status(200).send({ success: true, data: response });
+  } catch (err) {
+    res.send({ success: false, msg: `Error: ${err}` });
+  }
+});
+
 export default router;
