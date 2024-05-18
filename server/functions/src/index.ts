@@ -1,14 +1,11 @@
 import * as functions from "firebase-functions";
-import * as admin from "firebase-admin";
 import express from "express";
 import cors from "cors";
 import dotenv from "dotenv";
 import { Request, Response, NextFunction } from "express";
 
-import serviceAccountKey from "./serviceAccountKey.json";
-
-import userRouter from "./routes/user"
-
+import userRouter from "./routes/user";
+import productRouter from "./routes/products";
 
 dotenv.config();
 
@@ -24,16 +21,12 @@ app.use((req: Request, res: Response, next: NextFunction) => {
   next();
 });
 
-// Firebase credentials
-admin.initializeApp({
-  credential: admin.credential.cert(serviceAccountKey as admin.ServiceAccount),
-});
-
 // API endpoints
 app.get("/", (req: Request, res: Response) => {
   return res.send("The Server Is Running!");
 });
 
 app.use("/api/users", userRouter);
+app.use("/api/products", productRouter);
 
 exports.app = functions.https.onRequest(app);
