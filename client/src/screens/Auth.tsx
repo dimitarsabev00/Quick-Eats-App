@@ -28,20 +28,20 @@ const Auth: React.FC = () => {
   const signInWithGoogle = async () => {
     const provider = new GoogleAuthProvider();
     try {
-      const {
-        user: { email, uid, accessToken },
-      } = await signInWithPopup(auth, provider);
-      await validateUserJWTToken(accessToken);
+      const { user } = await signInWithPopup(auth, provider);
+
+      const token = await user.getIdToken();
+      await validateUserJWTToken(token);
 
       const usersRef = collection(db, "users");
-      const firestoreQuery = query(usersRef, where("uid", "==", uid));
+      const firestoreQuery = query(usersRef, where("uid", "==", user.uid));
 
       const fetchedUser = await getDocs(firestoreQuery);
       const notFoundUsers = fetchedUser.docs.length === 0;
 
       if (notFoundUsers) {
         const userDoc = {
-          uid,
+          user: user.uid,
           email,
           photoURL:
             "http://s3.amazonaws.com/37assets/svn/765-default-avatar.png",
