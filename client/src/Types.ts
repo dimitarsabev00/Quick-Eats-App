@@ -9,7 +9,7 @@ export interface GeneralSliceInitialState {
 }
 
 export interface Order {
-  orderId:number
+  orderId: number;
   // write type fields when im ready with create orders in app
 }
 export interface User {
@@ -24,7 +24,7 @@ export interface Product {
   product_name: string;
   product_category: string;
   product_price: number;
-  productId: string;
+  productId?: string;
 }
 export interface ShoppingCartProduct {
   imageURL: string;
