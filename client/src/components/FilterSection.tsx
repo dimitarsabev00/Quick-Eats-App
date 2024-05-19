@@ -23,6 +23,7 @@ const FilterSection: React.FC = () => {
         {statuses &&
           statuses.map((data, i) => (
             <FilterCard
+              key={data.id}
               data={data}
               category={category}
               setCategory={setCategory}
