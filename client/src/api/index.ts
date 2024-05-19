@@ -49,12 +49,27 @@ export const deleteProduct = async (productId: number) => {
 };
 
 // add an item to shoppingCart
-export const addItemToShoppingCart = async (userId: string | undefined, data: Product) => {
+export const addItemToShoppingCart = async (
+  userId: string | undefined,
+  data: Product
+) => {
   try {
     const res = await axios.post(`${baseURL}/api/products/addToShoppingCart/`, {
       ...data,
       userId,
     });
+    return res.data.data;
+  } catch (error) {
+    return null;
+  }
+};
+
+// get shoppingCart
+export const getShoppingCart = async (userId: string | undefined) => {
+  try {
+    const res = await axios.get(
+      `${baseURL}/api/products/getShoppingCart/${userId}`
+    );
     return res.data.data;
   } catch (error) {
     return null;
