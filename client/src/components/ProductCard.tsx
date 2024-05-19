@@ -5,7 +5,7 @@ import { buttonClick } from "../assets/animations";
 import { IoBasket } from "../assets/icons";
 import { Product } from "../Types";
 import { useAppDispatch } from "../store/hooks";
-import { addProduct, setShoppingCart } from "../store";
+import { setShoppingCart } from "../store";
 import { toast } from "react-hot-toast";
 import { addItemToShoppingCart, getShoppingCart } from "../api";
 import { useAuthState } from "react-firebase-hooks/auth";
