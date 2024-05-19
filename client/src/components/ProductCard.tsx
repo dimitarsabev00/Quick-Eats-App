@@ -5,20 +5,26 @@ import { buttonClick } from "../assets/animations";
 import { IoBasket } from "../assets/icons";
 import { Product } from "../Types";
 import { useAppDispatch } from "../store/hooks";
-import { addProduct } from "../store";
+import { addProduct, setShoppingCart } from "../store";
 import { toast } from "react-hot-toast";
+import { addItemToShoppingCart, getShoppingCart } from "../api";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../configs/firebase";
 
 type ProductCardProps = {
   data: Product;
 };
 
 const ProductCard: React.FC<ProductCardProps> = ({ data }) => {
+  const [user] = useAuthState(auth);
+
   const dispatch = useAppDispatch();
 
-  const addProductToShoppingCart = () => {
-    const newProductInShoppingCart = { ...data, quantity: 1 };
-    dispatch(addProduct(newProductInShoppingCart));
+  const addProductToShoppingCart = async () => {
+    await addItemToShoppingCart(user?.uid, data);
     toast.success("Added to the cart");
+    const allItemsFromShoppingCart = await getShoppingCart(user?.uid);
+    dispatch(setShoppingCart(allItemsFromShoppingCart));
   };
 
   return (
