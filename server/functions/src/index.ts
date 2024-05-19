@@ -15,7 +15,7 @@ const app = express();
 app.use(express.json());
 
 // Cross origin
-app.use(cors({ origin: true }));
+app.use(cors({ origin: 'http://localhost:5173' }));
 app.use((req: Request, res: Response, next: NextFunction) => {
   res.set("Access-Control-Allow-Origin", "*");
   next();
