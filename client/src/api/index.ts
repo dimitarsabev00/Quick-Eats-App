@@ -17,7 +17,6 @@ export const validateUserJWTToken = async (token: string) => {
 };
 
 // add new product
-
 export const addNewProduct = async (data: Product) => {
   try {
     const res = await axios.post(`${baseURL}/api/products/create`, { ...data });
@@ -28,7 +27,6 @@ export const addNewProduct = async (data: Product) => {
 };
 
 // get all products
-
 export const getAllProducts = async () => {
   try {
     const res = await axios.get(`${baseURL}/api/products/all`);
@@ -46,6 +44,19 @@ export const deleteProduct = async (productId: number) => {
     );
     return res.data.data;
   } catch (err) {
+    return null;
+  }
+};
+
+// add an item to shoppingCart
+export const addItemToShoppingCart = async (userId: string | undefined, data: Product) => {
+  try {
+    const res = await axios.post(`${baseURL}/api/products/addToShoppingCart/`, {
+      ...data,
+      userId,
+    });
+    return res.data.data;
+  } catch (error) {
     return null;
   }
 };
