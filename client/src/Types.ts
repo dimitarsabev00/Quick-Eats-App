@@ -26,11 +26,6 @@ export interface Product {
   product_price: number;
   productId?: string;
 }
-export interface ShoppingCartProduct {
-  imageURL: string;
-  product_name: string;
-  product_category: string;
-  product_price: number;
-  productId: string;
+export interface ShoppingCartProduct extends Product {
   quantity: number;
 }
