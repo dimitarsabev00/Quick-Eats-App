@@ -4,8 +4,9 @@ import { useAppDispatch } from "./store/hooks";
 import { useEffect } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "./configs/firebase";
-import { validateUserJWTToken } from "./api";
+import { getShoppingCart, validateUserJWTToken } from "./api";
 import { toast } from "react-hot-toast";
+import { setShoppingCart } from "./store";
 
 const App = () => {
   const [user] = useAuthState(auth);
@@ -21,6 +22,9 @@ const App = () => {
 
             if (data) {
               // get shoppingCart for currentUser
+              getShoppingCart(user.uid).then((allItemsFromShoppingCart) => {
+                dispatch(setShoppingCart(allItemsFromShoppingCart));
+              });
             }
           });
         });
@@ -28,7 +32,7 @@ const App = () => {
     } catch (error: any) {
       toast.error(error);
     }
-  }, []);
+  }, [user]);
 
   return (
     <div className="w-screen min-h-screen h-auto flex flex-col items-center justify-center">
