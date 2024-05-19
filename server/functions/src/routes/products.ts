@@ -108,4 +108,27 @@ router.post("/addToShoppingCart/", async (req, res) => {
   }
 });
 
+// get shoppingCart for that user
+router.get("/getShoppingCart/:user_id", async (req, res) => {
+  const userId = req.params.user_id;
+  try {
+    const query = db
+      .collection("cartItems")
+      .doc(`/${userId}/`)
+      .collection("items");
+
+    const response: any = [];
+    const querysnap = await query.get();
+    const docs = querysnap.docs;
+
+    docs.forEach((doc) => {
+      response.push({ ...doc.data() });
+    });
+
+    res.status(200).send({ success: true, data: response });
+  } catch (er) {
+    res.send({ success: false, msg: `Error: ${er}` });
+  }
+});
+
 export default router;
