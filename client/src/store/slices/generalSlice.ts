@@ -35,15 +35,8 @@ export const generalSlice = createSlice({
     setAllUsers: (state, action: PayloadAction<User[]>) => {
       state.allUsers = action.payload;
     },
-    addProduct: (state, action: PayloadAction<ShoppingCartProduct>) => {
-      const productIndex = state.shoppingCart.findIndex(
-        (p) => p.productId === action.payload.productId
-      );
-      if (productIndex >= 0) {
-        state.shoppingCart[productIndex].quantity += action.payload.quantity;
-      } else {
-        state.shoppingCart.push(action.payload);
-      }
+    setShoppingCart: (state, action: PayloadAction<ShoppingCartProduct[]>) => {
+      state.shoppingCart = action.payload;
     },
     showShoppingCart: (state) => {
       state.isShoppingCartVisible = true;
@@ -84,7 +77,7 @@ export const {
   logout,
   setAllProducts,
   setAllUsers,
-  addProduct,
+  setShoppingCart,
   showShoppingCart,
   hideShoppingCart,
   incrementProductQuantity,
