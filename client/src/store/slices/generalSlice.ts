@@ -66,6 +66,16 @@ export const generalSlice = createSlice({
         );
       }
     },
+    updateProductQuantity: (
+      state,
+      action: PayloadAction<{ productId: string; quantity: number }>
+    ) => {
+      const { productId, quantity } = action.payload;
+      const product = state.shoppingCart.find((p) => p.productId === productId);
+      if (product) {
+        product.quantity = quantity;
+      }
+    },
     checkOutShoppingCart: (state) => {
       state.shoppingCart = [];
     },
@@ -90,6 +100,7 @@ export const {
   hideShoppingCart,
   incrementProductQuantity,
   decrementProductQuantity,
+  updateProductQuantity,
   checkOutShoppingCart,
   setOrders,
   setUserOrders,

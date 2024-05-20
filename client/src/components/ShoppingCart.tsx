@@ -13,6 +13,7 @@ import {
   decrementProductQuantity,
   hideShoppingCart,
   incrementProductQuantity,
+  updateProductQuantity,
 } from "../store";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../configs/firebase";
@@ -130,6 +131,7 @@ const ShoppingCartItem: React.FC<ShoppingCartItemProps> = ({ index, data }) => {
   );
 
   const [itemTotal, setItemTotal] = useState(0);
+  const [quantity, setQuantity] = useState<string>(data.quantity.toString());
   const dispatch = useAppDispatch();
 
   const decrementCart = (productId: string) => {
@@ -140,9 +142,32 @@ const ShoppingCartItem: React.FC<ShoppingCartItemProps> = ({ index, data }) => {
     dispatch(incrementProductQuantity(productId));
   };
 
+  const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    if (/^\d*$/.test(value)) {
+      setQuantity(value);
+      if (value !== "") {
+        dispatch(
+          updateProductQuantity({
+            productId: data.productId,
+            quantity: Number(value),
+          })
+        );
+      }
+    }
+  };
+
   useEffect(() => {
-    setItemTotal(data.product_price * data.quantity);
-  }, [itemTotal, shoppingCart]);
+    if (quantity !== "") {
+      setItemTotal(data.product_price * Number(quantity));
+    } else {
+      setItemTotal(0);
+    }
+  }, [quantity, data.product_price]);
+
+  useEffect(() => {
+    setQuantity(data.quantity.toString());
+  }, [data.quantity]);
 
   return (
     <motion.div
@@ -176,7 +201,12 @@ const ShoppingCartItem: React.FC<ShoppingCartItemProps> = ({ index, data }) => {
         >
           <p className="text-xl font-semibold text-primary">--</p>
         </motion.div>
-        <p className="text-lg text-primary font-semibold">{data.quantity}</p>
+        <input
+          type="text"
+          className="text-lg text-primary font-semibold bg-transparent w-10 outline-none"
+          value={quantity}
+          onChange={handleQuantityChange}
+        />
         <motion.div
           {...buttonClick}
           className="w-8 h-8 flex items-center justify-center rounded-md drop-shadow-md bg-zinc-900 cursor-pointer"
