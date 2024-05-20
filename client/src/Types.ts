@@ -6,6 +6,7 @@ export interface GeneralSliceInitialState {
   shoppingCart: ShoppingCartProduct[];
   isShoppingCartVisible: boolean;
   orders: Order[];
+  userOrders: Order[];
 }
 
 export interface Order {
@@ -21,6 +22,7 @@ export interface Order {
     email: string;
     phone: string;
   };
+  userId: string;
 }
 export interface User {
   createdAt: number;

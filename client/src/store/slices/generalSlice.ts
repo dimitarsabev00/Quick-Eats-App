@@ -16,6 +16,7 @@ const initialState: GeneralSliceInitialState = {
   shoppingCart: [],
   isShoppingCartVisible: false,
   orders: [],
+  userOrders: [],
 };
 
 export const generalSlice = createSlice({
@@ -71,6 +72,9 @@ export const generalSlice = createSlice({
     setOrders: (state, action: PayloadAction<Order[]>) => {
       state.orders = action.payload;
     },
+    setUserOrders: (state, action: PayloadAction<Order[]>) => {
+      state.userOrders = action.payload;
+    },
   },
 });
 
@@ -88,6 +92,7 @@ export const {
   decrementProductQuantity,
   checkOutShoppingCart,
   setOrders,
+  setUserOrders,
 } = generalSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>;
