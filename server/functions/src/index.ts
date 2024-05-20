@@ -1,8 +1,7 @@
 import * as functions from "firebase-functions";
-import express from "express";
+import express, { Request, Response, NextFunction } from "express";
 import cors from "cors";
 import dotenv from "dotenv";
-import { Request, Response, NextFunction } from "express";
 
 import userRouter from "./routes/user";
 import productRouter from "./routes/products";
@@ -29,4 +28,5 @@ app.get("/", (req: Request, res: Response) => {
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 
+// Export your Express app as a Firebase Function
 exports.app = functions.https.onRequest(app);

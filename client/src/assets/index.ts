@@ -3,3 +3,4 @@ export { default as Logo } from "./images/logo.png";
 export { default as Avatar } from "./images/avatar.png";
 export { default as Delivery } from "./images/delivery.png";
 export { default as Hero } from "./images/hero.png";
+export { default as Bill } from "./images/bill.jpg";

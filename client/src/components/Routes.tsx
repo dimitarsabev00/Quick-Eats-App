@@ -1,5 +1,5 @@
 import { Navigate, Route, Routes, useLocation } from "react-router";
-import { Auth, Dashboard, Main } from "../screens";
+import { Auth, CheckoutSuccess, Dashboard, Main } from "../screens";
 import { auth } from "../configs/firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { ReactNode } from "react";
@@ -34,6 +34,7 @@ const RoutesComp = () => {
           }
         />
         <Route path="/dashboard/*" element={<Dashboard />} />
+        <Route path="/checkout-success" element={<CheckoutSuccess />} />
       </Routes>
       <Toaster position="bottom-right" />
     </>

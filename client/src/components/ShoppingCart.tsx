@@ -14,8 +14,15 @@ import {
   hideShoppingCart,
   incrementProductQuantity,
 } from "../store";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../configs/firebase";
+import axios from "axios";
+import { baseURL } from "../api";
+import { toast } from "react-hot-toast";
 
 const ShoppingCart: React.FC = () => {
+  const [user] = useAuthState(auth);
+
   const dispatch = useAppDispatch();
   const shoppingCart = useAppSelector(
     (state) => state.generalSlice.shoppingCart
@@ -33,8 +40,24 @@ const ShoppingCart: React.FC = () => {
     }
   }, [shoppingCart]);
 
-  const handleCheckOut = () => {
+  const handleCheckOut = async () => {
     dispatch(checkOutShoppingCart());
+    const data = {
+      user,
+      shoppingCart,
+      total,
+    };
+    try {
+      const res = await axios.post(
+        `${baseURL}/api/products/create-checkout-session`,
+        { data }
+      );
+      if (res.data.url) {
+        window.location.href = res.data.url;
+      }
+    } catch (error: any) {
+      toast.error(error);
+    }
   };
 
   return (
