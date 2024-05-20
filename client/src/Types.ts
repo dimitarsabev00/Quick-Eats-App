@@ -10,7 +10,17 @@ export interface GeneralSliceInitialState {
 
 export interface Order {
   orderId: number;
-  // write type fields when im ready with create orders in app
+  total: string;
+  status: string;
+  sts: string;
+  itemsCount: string;
+  customer_details: {
+    name: string;
+  };
+  customer: {
+    email: string;
+    phone: string;
+  };
 }
 export interface User {
   createdAt: number;

@@ -182,6 +182,7 @@ app.get("/api/products/getShoppingCart/:user_id", async (req, res) => {
   }
 });
 
+// stripe checkout session
 app.post("/api/products/create-checkout-session", async (req, res) => {
   const customer = await stripe.customers.create({
     metadata: {
@@ -295,6 +296,7 @@ const createOrder = async (customer: any, intent: any, res: Response) => {
       status: intent.payment_status,
       customer: intent.customer_details,
       shipping_details: intent.shipping_details,
+      customer_details: intent.customer_details,
       userId: customer.metadata.user_id,
       // fix bug with shoppingCart
       // items: JSON.parse(customer.metadata.shoppingCart),
@@ -315,6 +317,8 @@ const createOrder = async (customer: any, intent: any, res: Response) => {
     return res.status(500).send({ success: false, msg: `Error: ${err}` });
   }
 };
+
+// delete shoppingCart Functionality
 const deleteCart = async (userId: string) => {
   try {
     const cartItemsRef = db
@@ -337,6 +341,37 @@ const deleteCart = async (userId: string) => {
     console.error(`Error deleting cart for user ${userId}: ${err}`);
   }
 };
+
+// get all orders
+app.get("/api/products/orders", async (req, res) => {
+  try {
+    let query = db.collection("orders");
+    let response: any = [];
+    let querySnap = await query.get();
+    querySnap.docs.forEach((doc) => {
+      response.push({ ...doc.data() });
+    });
+    res.status(200).send({ success: true, data: response });
+  } catch (err) {
+    res.status(500).send({ success: false, msg: `Error: ${err}` });
+  }
+});
+
+// update the order status
+app.post("/api/products/updateOrders/:order_id", async (req, res) => {
+  const order_id = req.params.order_id;
+  const sts = req.query.sts;
+
+  try {
+    const updatedItem = await db
+      .collection("orders")
+      .doc(`/${order_id}/`)
+      .update({ sts });
+    return res.status(200).send({ success: true, data: updatedItem });
+  } catch (er) {
+    return res.send({ success: false, msg: `Error :,${er}` });
+  }
+});
 
 // Export your Express app as a Firebase Function
 exports.app = functions.https.onRequest(app);

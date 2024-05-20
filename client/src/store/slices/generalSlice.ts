@@ -2,6 +2,7 @@ import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import store from "..";
 import {
   GeneralSliceInitialState,
+  Order,
   Product,
   ShoppingCartProduct,
   User,
@@ -67,6 +68,9 @@ export const generalSlice = createSlice({
     checkOutShoppingCart: (state) => {
       state.shoppingCart = [];
     },
+    setOrders: (state, action: PayloadAction<Order[]>) => {
+      state.orders = action.payload;
+    },
   },
 });
 
@@ -83,6 +87,7 @@ export const {
   incrementProductQuantity,
   decrementProductQuantity,
   checkOutShoppingCart,
+  setOrders,
 } = generalSlice.actions;
 
 export type RootState = ReturnType<typeof store.getState>;

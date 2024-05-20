@@ -4,6 +4,8 @@ import { HiCurrencyDollar } from "../../assets/icons";
 import { buttonClick, staggerFadeInOut } from "../../assets/animations";
 import { useAppDispatch } from "../../store/hooks";
 import { Order } from "../../Types";
+import { getAllOrders, updateOrderStatus } from "../../api";
+import { setOrders } from "../../store";
 
 type OrderDataProps = {
   index: number;
@@ -14,7 +16,11 @@ type OrderDataProps = {
 const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
   const dispatch = useAppDispatch();
 
-  const handleClick = (orderId: number, sts: string) => {};
+  const handleClickUpdateOrderStatus = async (orderId: number, sts: string) => {
+    await updateOrderStatus(orderId, sts);
+    const orders = await getAllOrders();
+    dispatch(setOrders(orders));
+  };
 
   return (
     <motion.div
@@ -50,7 +56,9 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
 
               <motion.p
                 {...buttonClick}
-                onClick={() => handleClick(data.orderId, "preparing")}
+                onClick={() =>
+                  handleClickUpdateOrderStatus(data.orderId, "preparing")
+                }
                 className={`text-orange-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer`}
               >
                 Preparing
@@ -58,7 +66,9 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
 
               <motion.p
                 {...buttonClick}
-                onClick={() => handleClick(data.orderId, "cancelled")}
+                onClick={() =>
+                  handleClickUpdateOrderStatus(data.orderId, "cancelled")
+                }
                 className={`text-red-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer`}
               >
                 Cancelled
@@ -66,7 +76,9 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
 
               <motion.p
                 {...buttonClick}
-                onClick={() => handleClick(data.orderId, "delivered")}
+                onClick={() =>
+                  handleClickUpdateOrderStatus(data.orderId, "delivered")
+                }
                 className={`text-emerald-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer`}
               >
                 Delivered
@@ -78,7 +90,7 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
 
       <div className="flex items-center justify-start flex-wrap w-full">
         <div className="flex items-center justify-center gap-4">
-          {data?.items &&
+          {/* {data?.items &&
             data.items.map((item, j) => (
               <motion.div
                 {...staggerFadeInOut(j)}
@@ -107,12 +119,28 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
                   </div>
                 </div>
               </motion.div>
-            ))}
+            ))} */}
+          <motion.div className="flex items-center justify-center gap-1">
+            <div className="flex items-start flex-col">
+              <p className="text-base font-semibold text-headingColor">
+                All Products
+              </p>
+              <div className="flex items-start gap-2">
+                <p className="text-sm text-textColor">
+                  {data.itemsCount.length
+                    ? `${data.itemsCount.length} ${
+                        data.itemsCount.length === 1 ? "Product" : "Products"
+                      }`
+                    : null}
+                </p>
+              </div>
+            </div>
+          </motion.div>
         </div>
 
         <div className="flex items-start justify-start flex-col gap-2 px-6 ml-auto w-full md:w-460">
           <h1 className="text-lg text-headingColor font-semibold">
-            {data.shipping_details.name}
+            {data.customer_details?.name}
           </h1>
 
           <p className="text-base text-headingColor -mt-2">
@@ -120,11 +148,11 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
           </p>
 
           <p className="text-base text-textColor -mt-2">
-            {data.shipping_details.address.line1},
-            {data.shipping_details.address.line2}{" "}
-            {data.shipping_details.address.country},
-            {data.shipping_details.address.state} -
-            {data.shipping_details.address.postal_code}
+            {/* {data?.shipping_details?.address?.line1},
+            {data?.shipping_details?.address?.line2}{" "}
+            {data?.shipping_details?.address?.country},
+            {data?.shipping_details?.address?.state} -
+            {data?.shipping_details?.address?.postal_code} */}
           </p>
         </div>
       </div>
