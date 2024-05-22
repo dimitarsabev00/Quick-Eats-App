@@ -5,7 +5,7 @@
   "scripts": {
     "install": "cd functions && npm install",
     "build": "cd functions && npm run build",
-    "start": "npm run build && node functions/lib/index.js",
+    "start": "cd functions && npm run build && firebase emulators:start --only functions",
     "serve": "cd functions && npm run serve"
   },
   "dependencies": {
