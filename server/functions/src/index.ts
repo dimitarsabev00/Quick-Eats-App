@@ -187,17 +187,10 @@ app.post("/api/products/create-checkout-session", async (req, res) => {
   const customer = await stripe.customers.create({
     metadata: {
       user_id: req.body.data.user.uid,
-      // fix bug with shoppingCart
-      // shoppingCart: JSON.stringify(req.body.data.shoppingCart).substring(
-      //   0,
-      //   500
-      // ), // Ensure it's within the character limit
-      // fix bug with shoppingCart
-      shoppingCartLength: req.body.data.shoppingCart.length,
+      shoppingCart: JSON.stringify(req.body.data.shoppingCart),
       total: req.body.data.total.toString(),
     },
   });
-
   const line_items = req.body.data.shoppingCart.map((item: any) => {
     return {
       price_data: {
@@ -298,10 +291,7 @@ const createOrder = async (customer: any, intent: any, res: Response) => {
       shipping_details: intent.shipping_details,
       customer_details: intent.customer_details,
       userId: customer.metadata.user_id,
-      // fix bug with shoppingCart
-      // items: JSON.parse(customer.metadata.shoppingCart),
-      // fix bug with shoppingCart
-      itemsCount: customer.metadata.shoppingCartLength,
+      items: JSON.parse(customer.metadata.shoppingCart),
       total: customer.metadata.total,
       sts: "preparing",
     };

@@ -28,7 +28,7 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
       className="w-full flex flex-col items-start justify-start px-3 py-2 border relative border-gray-300 bg-lightOverlay drop-shadow-md rounded-md gap-4"
     >
       <div className="w-full flex items-center justify-between">
-        <h1 className="text-xl text-headingColor font-semibold">Orders</h1>
+        <h1 className="text-xl text-headingColor font-semibold">Order</h1>
 
         <div className=" flex items-center gap-4">
           <p className="flex items-center gap-1 text-textColor">
@@ -90,7 +90,7 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
 
       <div className="flex items-center justify-start flex-wrap w-full">
         <div className="flex items-center justify-center gap-4">
-          {/* {data?.items &&
+          {data?.items &&
             data.items.map((item, j) => (
               <motion.div
                 {...staggerFadeInOut(j)}
@@ -114,28 +114,12 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
                     </p>
                     <p className="flex items-center gap-1 text-textColor">
                       <HiCurrencyDollar className="text-base text-red-500" />
-                      {parseFloat(item.product_price).toFixed(2)}
+                      {item.product_price.toFixed(2)}
                     </p>
                   </div>
                 </div>
               </motion.div>
-            ))} */}
-          <motion.div className="flex items-center justify-center gap-1">
-            <div className="flex items-start flex-col">
-              <p className="text-base font-semibold text-headingColor">
-                All Products
-              </p>
-              <div className="flex items-start gap-2">
-                <p className="text-sm text-textColor">
-                  {data.itemsCount.length
-                    ? `${data.itemsCount.length} ${
-                        data.itemsCount.length === 1 ? "Product" : "Products"
-                      }`
-                    : null}
-                </p>
-              </div>
-            </div>
-          </motion.div>
+            ))}
         </div>
 
         <div className="flex items-start justify-start flex-col gap-2 px-6 ml-auto w-full md:w-460">

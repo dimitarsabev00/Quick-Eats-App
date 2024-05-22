@@ -14,7 +14,7 @@ export interface Order {
   total: string;
   status: string;
   sts: string;
-  itemsCount: string;
+  items: ShoppingCartProduct[];
   customer_details: {
     name: string;
   };
