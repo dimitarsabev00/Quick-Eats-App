@@ -40,14 +40,14 @@ const Home: React.FC = () => {
         </motion.button>
       </div>
 
-      <div className="py-2 flex-1 flex items-center justify-end relative">
+      <div className="py-2 flex-1 flex items-center justify-center relative w-full">
         <img
-          className="absolute top-0 right-0 md:-right-12 w-full h-420 md:w-auto md:h-650"
+          className="absolute top-0 right-0 w-full h-420  md:h-650"
           src={Hero}
           alt="Hero"
         />
 
-        <div className="w-full md:w-460 ml-0 flex flex-wrap items-center justify-center gap-4 gap-y-14">
+        <div className="w-full md:w-460 ml-0 mt-[5rem] flex flex-wrap items-center justify-center gap-4 gap-y-14">
           {products &&
             products.map((data) => (
               <motion.div
