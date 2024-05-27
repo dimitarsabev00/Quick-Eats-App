@@ -14,7 +14,7 @@ const HomeSlider: React.FC = () => {
   }, [products]);
 
   return (
-    <motion.div className="w-full flex items-start justify-start flex-col mt-[15rem] md:mt-0">
+    <motion.div className="w-full flex items-start justify-start flex-col mt-[3rem] md:mt-0">
       <div className="w-full flex items-center justify-between">
         <div className="flex flex-col items-start justify-start gap-1">
           <p className="text-2xl text-headingColor font-bold">
