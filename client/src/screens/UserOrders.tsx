@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../configs/firebase";
@@ -8,7 +8,7 @@ import { Order } from "../Types";
 import { setUserOrders } from "../store";
 import OrdersData from "../components/DashboardComponents/OrdersData";
 
-const UsersOrder = () => {
+const UsersOrder: React.FC = () => {
   const [user] = useAuthState(auth);
 
   const orders = useAppSelector(({ generalSlice }) => generalSlice.orders);
@@ -43,7 +43,9 @@ const UsersOrder = () => {
           </>
         ) : (
           <>
-            <h1 className="text-[72px] text-headingColor font-bold">No orders for current user</h1>
+            <h1 className="text-[72px] text-headingColor font-bold">
+              No orders for current user
+            </h1>
           </>
         )}
       </div>
