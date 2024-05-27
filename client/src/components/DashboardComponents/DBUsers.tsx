@@ -43,7 +43,7 @@ const DBUsers: React.FC = () => {
           {
             title: "Image",
             field: "photoURL",
-            render: (rowData) => (
+            render: (rowData: User) => (
               <img
                 src={rowData.photoURL ? rowData.photoURL : Avatar}
                 className="w-32 h-16 object-contain rounded-md"
@@ -61,7 +61,7 @@ const DBUsers: React.FC = () => {
           {
             title: "Verified",
             field: "emailVerified",
-            render: (rowData) => (
+            render: (rowData: User) => (
               <p
                 className={`px-2 py-1 w-32 text-center text-primary rounded-md ${
                   rowData.emailVerified ? "bg-emerald-500" : "bg-red-500"
@@ -78,14 +78,14 @@ const DBUsers: React.FC = () => {
           {
             icon: "edit",
             tooltip: "Edit Data",
-            onClick: (event, rowData) => {
+            onClick: (event: any, rowData: User) => {
               alert("You want to edit " + rowData.email);
             },
           },
           {
             icon: "delete",
             tooltip: "Delete Data",
-            onClick: (event, rowData) => {
+            onClick: (event: any, rowData: User) => {
               alert("You want to delete " + rowData.email);
 
               // if (
