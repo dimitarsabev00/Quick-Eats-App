@@ -37,7 +37,7 @@ export const getAllProducts = async () => {
 };
 
 // delete product
-export const deleteProduct = async (productId: number) => {
+export const deleteProduct = async (productId: string) => {
   try {
     const res = await axios.delete(
       `${baseURL}/api/products/delete/${productId}`
