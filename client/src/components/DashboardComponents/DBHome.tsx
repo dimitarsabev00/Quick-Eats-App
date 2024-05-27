@@ -1,32 +1,26 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { setAllProducts } from "../../store";
-import { CChart } from "@coreui/react-chartjs";
-import { getAllProducts } from "../../api";
+import React, { useEffect } from "react"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { setAllProducts } from "../../store"
+import { CChart } from "@coreui/react-chartjs"
+import { getAllProducts } from "../../api"
 
 const DBHome: React.FC = () => {
-  const products = useAppSelector(({ generalSlice }) => generalSlice.products);
-  const dispatch = useAppDispatch();
+  const products = useAppSelector(({ generalSlice }) => generalSlice.products)
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (!products.length) {
-      getAllProducts().then((allProducts) =>
-        dispatch(setAllProducts(allProducts))
-      );
+      getAllProducts().then(allProducts => dispatch(setAllProducts(allProducts)))
     }
-  }, []);
+  }, [products.length, dispatch])
 
-  const drinks = products?.filter((item) => item.product_category === "drinks");
-  const deserts = products?.filter(
-    (item) => item.product_category === "deserts"
-  );
-  const fruits = products?.filter((item) => item.product_category === "fruits");
-  const rice = products?.filter((item) => item.product_category === "rice");
-  const curry = products?.filter((item) => item.product_category === "curry");
-  const chinese = products?.filter(
-    (item) => item.product_category === "chinese"
-  );
-  const bread = products?.filter((item) => item.product_category === "bread");
+  const drinks = products?.filter(item => item.product_category === "drinks")
+  const deserts = products?.filter(item => item.product_category === "deserts")
+  const fruits = products?.filter(item => item.product_category === "fruits")
+  const rice = products?.filter(item => item.product_category === "rice")
+  const curry = products?.filter(item => item.product_category === "curry")
+  const chinese = products?.filter(item => item.product_category === "chinese")
+  const bread = products?.filter(item => item.product_category === "bread")
 
   return (
     <div className="flex items-center justify-center flex-col pt-6 w-full h-full">
@@ -43,7 +37,7 @@ const DBHome: React.FC = () => {
                   "Rice",
                   "Curry",
                   "Bread",
-                  "Chinese",
+                  "Chinese"
                 ],
                 datasets: [
                   {
@@ -56,12 +50,11 @@ const DBHome: React.FC = () => {
                       rice?.length,
                       curry?.length,
                       chinese?.length,
-                      bread?.length,
-                    ],
-                  },
-                ],
+                      bread?.length
+                    ]
+                  }
+                ]
               }}
-              labels="months"
             />
           </div>
         </div>
@@ -75,7 +68,7 @@ const DBHome: React.FC = () => {
                   "Delivered",
                   "Cancelled",
                   "Paid",
-                  "Not Paid",
+                  "Not Paid"
                 ],
                 datasets: [
                   {
@@ -84,18 +77,18 @@ const DBHome: React.FC = () => {
                       "#00B6FF",
                       "#008BFF",
                       "#FFD100",
-                      "#FF00FB",
+                      "#FF00FB"
                     ],
-                    data: [40, 20, 80, 34, 54],
-                  },
-                ],
+                    data: [40, 20, 80, 34, 54]
+                  }
+                ]
               }}
             />
           </div>
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DBHome;
+export default DBHome
