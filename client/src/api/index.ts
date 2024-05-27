@@ -3,7 +3,7 @@ import { toast } from "react-hot-toast";
 import { Product } from "../Types";
 
 export const baseURL =
-  "http://localhost:5001/quick-eats-app-1bce5/us-central1/app";
+  "https://us-central1-quick-eats-app-1bce5.cloudfunctions.net/app";
 
 export const validateUserJWTToken = async (token: string) => {
   try {
