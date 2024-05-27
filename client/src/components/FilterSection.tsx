@@ -52,7 +52,6 @@ type FilterCardProps = {
 };
 const FilterCard: React.FC<FilterCardProps> = ({
   data,
-  index,
   category,
   setCategory,
 }) => {
