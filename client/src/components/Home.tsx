@@ -49,7 +49,7 @@ const Home: React.FC = () => {
 
         <div className="w-full md:w-460 ml-0 flex flex-wrap items-center justify-center gap-4 gap-y-14">
           {products &&
-            products.map((data, i) => (
+            products.map((data) => (
               <motion.div
                 key={data.productId}
                 {...staggerFadeInOut}
