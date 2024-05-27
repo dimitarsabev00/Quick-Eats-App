@@ -1,11 +1,6 @@
 import React from "react";
-import MaterialTable, { Action, Column } from "material-table";
+import MaterialTable from "material-table";
 import { ThemeProvider, createTheme } from "@mui/material";
-import { Product } from "../Types";
-
-type ProductAction = Action<Product>;
-
-type ProductColumn = Column<Product>;
 
 type DataTableProps = {
   columns: any[];
