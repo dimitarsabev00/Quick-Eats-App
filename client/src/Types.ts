@@ -29,6 +29,7 @@ export interface User {
   uid: number;
   email: string;
   photoURL: string;
+  emailVerified?: boolean;
 }
 
 export interface Product {
