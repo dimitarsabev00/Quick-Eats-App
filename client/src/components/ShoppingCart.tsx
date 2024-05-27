@@ -126,10 +126,6 @@ type ShoppingCartItemProps = {
 };
 
 const ShoppingCartItem: React.FC<ShoppingCartItemProps> = ({ index, data }) => {
-  const shoppingCart = useAppSelector(
-    (state) => state.generalSlice.shoppingCart
-  );
-
   const [itemTotal, setItemTotal] = useState(0);
   const [quantity, setQuantity] = useState<string>(data.quantity.toString());
   const dispatch = useAppDispatch();
