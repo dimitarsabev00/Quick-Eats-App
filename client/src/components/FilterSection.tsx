@@ -11,15 +11,15 @@ const FilterSection: React.FC = () => {
   const products = useAppSelector(({ generalSlice }) => generalSlice.products);
 
   return (
-    <motion.div className="w-full flex items-start justify-start flex-col">
-      <div className=" w-full flex items-center justify-between ">
+    <motion.div className="w-full flex flex-col items-start justify-start">
+      <div className="md:w-full w-auto flex flex-col md:flex-row items-center justify-between">
         <div className="flex flex-col items-start justify-start gap-1">
           <p className="text-2xl text-headingColor font-bold">Our Hot Dishes</p>
           <div className="w-40 h-1 rounded-md bg-orange-500"></div>
         </div>
       </div>
 
-      <div className="w-full overflow-x-scroll pt-6 flex items-center justify-center gap-6 py-8">
+      <div className="w-full overflow-x-scroll pt-6 flex items-center justify-start gap-6 py-8">
         {statuses &&
           statuses.map((data, i) => (
             <FilterCard
@@ -32,7 +32,7 @@ const FilterSection: React.FC = () => {
           ))}
       </div>
 
-      <div className=" w-full flex items-center justify-evenly flex-wrap gap-4 mt-12 ">
+      <div className="flex items-center justify-evenly flex-wrap gap-4 mt-12">
         {products &&
           products
             .filter((data) => data.product_category === category)
@@ -60,7 +60,7 @@ const FilterCard: React.FC<FilterCardProps> = ({
       key={data.id}
       {...staggerFadeInOut}
       onClick={() => setCategory(data.category)}
-      className={`group w-28 min-w-[128px] cursor-pointer rounded-md  py-6 ${
+      className={`group w-28 min-w-[128px] cursor-pointer rounded-md py-6 ${
         category === data.category ? "bg-red-500" : "bg-primary"
       } hover:bg-red-500 shadow-md flex flex-col items-center justify-center gap-4`}
     >

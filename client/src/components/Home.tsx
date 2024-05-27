@@ -8,7 +8,7 @@ const Home: React.FC = () => {
   const products = useAppSelector(({ generalSlice }) => generalSlice.products);
 
   return (
-    <motion.div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4 ">
+    <motion.div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
       <div className="flex flex-col items-start justify-start gap-6">
         <div className="px-4 py-1 flex items-center justify-center gap-2 bg-orange-100 rounded-full">
           <p className="text-lg font-semibold text-orange-500">Free Delivery</p>
@@ -42,7 +42,7 @@ const Home: React.FC = () => {
 
       <div className="py-2 flex-1 flex items-center justify-end relative">
         <img
-          className="absolute top-0 right-0 md:-right-12  w-full h-420 md:w-auto md:h-650"
+          className="absolute top-0 right-0 md:-right-12 w-full h-420 md:w-auto md:h-650"
           src={Hero}
           alt="Hero"
         />
@@ -53,22 +53,22 @@ const Home: React.FC = () => {
               <motion.div
                 key={data.productId}
                 {...staggerFadeInOut}
-                className=" w-32 h-36 md:h-auto  md:w-190 p-4 bg-lightOverlay backdrop-blur-md rounded-3xl flex flex-col items-center justify-center drop-shadow-lg"
+                className="w-32 h-36 md:h-auto md:w-190 p-4 bg-lightOverlay backdrop-blur-md rounded-3xl flex flex-col items-center justify-center drop-shadow-lg"
               >
                 <img
                   src={data.imageURL}
-                  className="w-12 h-12 md:w-32 md:h-32 md:-mt-16 object-contain "
-                  alt=""
+                  className="w-12 h-12 md:w-32 md:h-32 md:-mt-16 object-contain"
+                  alt={data.product_name}
                 />
                 <p className="text-sm lg:text-xl font-semibold text-textColor">
                   {data.product_name.slice(0, 14)}
                 </p>
 
-                <p className="text-[12px] text-center  md:text-base text-lighttextGray font-semibold  capitalize">
+                <p className="text-[12px] text-center md:text-base text-lighttextGray font-semibold capitalize">
                   {data.product_category}
                 </p>
 
-                <p className="text-sm  font-semibold text-headingColor">
+                <p className="text-sm font-semibold text-headingColor">
                   <span className="text-xs text-red-600">$</span>{" "}
                   {data.product_price}
                 </p>

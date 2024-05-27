@@ -5,16 +5,17 @@ import { Product } from "../Types";
 import { Swiper, SwiperSlide } from "swiper/react";
 import ProductCard from "./ProductCard";
 
-const HomeSLider: React.FC = () => {
+const HomeSlider: React.FC = () => {
   const products = useAppSelector(({ generalSlice }) => generalSlice.products);
   const [fruits, setFruits] = useState<Product[]>([]);
+
   useEffect(() => {
     setFruits(products?.filter((data) => data.product_category === "fruits"));
   }, [products]);
 
   return (
-    <motion.div className="w-full flex items-start justify-start flex-col">
-      <div className=" w-full flex items-center justify-between ">
+    <motion.div className="w-full flex items-start justify-start flex-col mt-[15rem] md:mt-0">
+      <div className="w-full flex items-center justify-between">
         <div className="flex flex-col items-start justify-start gap-1">
           <p className="text-2xl text-headingColor font-bold">
             Our Fresh & Healthy Fruits
@@ -23,12 +24,26 @@ const HomeSLider: React.FC = () => {
         </div>
       </div>
 
-      {/* Slider  */}
+      {/* Slider */}
       <div className="w-full pt-24">
         <Swiper
-          slidesPerView={4}
+          slidesPerView={1}
+          breakpoints={{
+            640: {
+              slidesPerView: 2,
+              spaceBetween: 20,
+            },
+            768: {
+              slidesPerView: 3,
+              spaceBetween: 30,
+            },
+            1024: {
+              slidesPerView: 4,
+              spaceBetween: 30,
+            },
+          }}
           centeredSlides={false}
-          spaceBetween={30}
+          spaceBetween={10}
           grabCursor={true}
           className="mySwiper"
         >
@@ -44,4 +59,4 @@ const HomeSLider: React.FC = () => {
   );
 };
 
-export default HomeSLider;
+export default HomeSlider;
