@@ -8,12 +8,12 @@ import { Toaster } from "react-hot-toast";
 const RoutesComp = () => {
   const [user] = useAuthState(auth);
 
-  const PrivateRoute = ({ children }: { children: ReactNode }) => {
-    let location = useLocation();
-    if (!user)
-      return <Navigate to="/auth" state={{ from: location }} replace />;
-    return children;
-  };
+  // const PrivateRoute = ({ children }: { children: ReactNode }) => {
+  //   let location = useLocation();
+  //   if (!user)
+  //     return <Navigate to="/auth" state={{ from: location }} replace />;
+  //   return children;
+  // };
 
   const AuthRoute = ({ children }: { children: ReactNode }) => {
     let location = useLocation();
@@ -36,7 +36,6 @@ const RoutesComp = () => {
         <Route path="/dashboard/*" element={<Dashboard />} />
         <Route path="/checkout-success" element={<CheckoutSuccess />} />
         <Route path="/user-orders" element={<UserOrders />} />
-
       </Routes>
       <Toaster position="bottom-right" />
     </>
