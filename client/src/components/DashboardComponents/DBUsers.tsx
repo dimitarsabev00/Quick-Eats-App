@@ -78,14 +78,14 @@ const DBUsers: React.FC = () => {
           {
             icon: "edit",
             tooltip: "Edit Data",
-            onClick: (event: any, rowData: User) => {
+            onClick: (_event: any, rowData: User) => {
               alert("You want to edit " + rowData.email);
             },
           },
           {
             icon: "delete",
             tooltip: "Delete Data",
-            onClick: (event: any, rowData: User) => {
+            onClick: (_event: any, rowData: User) => {
               alert("You want to delete " + rowData.email);
 
               // if (

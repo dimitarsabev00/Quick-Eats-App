@@ -39,7 +39,7 @@ const DBItems: React.FC = () => {
             title: "Price",
             field: "product_price",
             render: (rowData: Product) => (
-              <p className="text-xl font-semibold text-textColor flex items-center justify-center ">
+              <p className="text-xl font-semibold text-textColor flex items-center justify-center">
                 <HiCurrencyDollar className="text-red-400" />
                 {rowData.product_price.toFixed(2)}
               </p>
@@ -52,24 +52,24 @@ const DBItems: React.FC = () => {
           {
             icon: "edit",
             tooltip: "Edit Data",
-            onClick: (event: any, rowData: Product) => {
+            onClick: (_event: any, rowData: Product) => {
               alert("You want to edit " + rowData.product_name);
             },
           },
           {
             icon: "delete",
             tooltip: "Delete Data",
-            onClick: async (event: any, rowData: Product) => {
+            onClick: async (_event: any, rowData: Product) => {
               if (
                 window.confirm("Are you sure, you want to perform this action")
               ) {
                 try {
-                  if(rowData.productId){
+                  if (rowData.productId) {
                     await deleteProduct(rowData.productId);
-                  toast.success("Product Deleted");
+                    toast.success("Product Deleted");
 
-                  const allProducts = await getAllProducts();
-                  dispatch(setAllProducts(allProducts));
+                    const allProducts = await getAllProducts();
+                    dispatch(setAllProducts(allProducts));
                   }
                 } catch (error: any) {
                   toast.error("Failed to delete the product: " + error.message);
