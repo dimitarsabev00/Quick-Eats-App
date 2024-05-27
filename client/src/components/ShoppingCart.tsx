@@ -134,19 +134,23 @@ const ShoppingCartItem: React.FC<ShoppingCartItemProps> = ({ index, data }) => {
   const [quantity, setQuantity] = useState<string>(data.quantity.toString());
   const dispatch = useAppDispatch();
 
-  const decrementCart = (productId: string) => {
-    dispatch(decrementProductQuantity(productId));
+  const decrementCart = (productId: string | undefined) => {
+    if (productId) {
+      dispatch(decrementProductQuantity(productId));
+    }
   };
 
-  const incrementCart = (productId: string) => {
-    dispatch(incrementProductQuantity(productId));
+  const incrementCart = (productId: string | undefined) => {
+    if (productId) {
+      dispatch(incrementProductQuantity(productId));
+    }
   };
 
   const handleQuantityChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     if (/^\d*$/.test(value)) {
       setQuantity(value);
-      if (value !== "") {
+      if (value !== "" && data.productId) {
         dispatch(
           updateProductQuantity({
             productId: data.productId,
@@ -172,7 +176,7 @@ const ShoppingCartItem: React.FC<ShoppingCartItemProps> = ({ index, data }) => {
   return (
     <motion.div
       key={index}
-      {...staggerFadeInOut(index)}
+      {...staggerFadeInOut}
       className="w-full flex items-center justify-start bg-zinc-800 rounded-md drop-shadow-md px-4 gap-4"
     >
       <img
