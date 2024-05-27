@@ -41,7 +41,7 @@ const Header: React.FC = () => {
       </NavLink>
 
       <nav className="flex items-center justify-center gap-8">
-        <ul className="hidden md:flex items-center justify-center gap-16">
+        {/* <ul className="hidden md:flex items-center justify-center gap-16">
           <NavLink
             className={({ isActive }) =>
               isActive ? isActiveStyles : isNotActiveStyles
@@ -74,7 +74,7 @@ const Header: React.FC = () => {
           >
             About Us
           </NavLink>
-        </ul>
+        </ul> */}
 
         <motion.div
           {...buttonClick}
