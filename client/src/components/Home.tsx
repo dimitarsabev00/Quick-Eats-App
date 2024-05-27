@@ -51,8 +51,8 @@ const Home: React.FC = () => {
           {products &&
             products.map((data, i) => (
               <motion.div
-                key={data.id}
-                {...staggerFadeInOut(i)}
+                key={data.productId}
+                {...staggerFadeInOut}
                 className=" w-32 h-36 md:h-auto  md:w-190 p-4 bg-lightOverlay backdrop-blur-md rounded-3xl flex flex-col items-center justify-center drop-shadow-lg"
               >
                 <img

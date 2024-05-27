@@ -59,7 +59,7 @@ const FilterCard: React.FC<FilterCardProps> = ({
   return (
     <motion.div
       key={data.id}
-      {...staggerFadeInOut(index)}
+      {...staggerFadeInOut}
       onClick={() => setCategory(data.category)}
       className={`group w-28 min-w-[128px] cursor-pointer rounded-md  py-6 ${
         category === data.category ? "bg-red-500" : "bg-primary"

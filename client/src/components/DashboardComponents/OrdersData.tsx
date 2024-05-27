@@ -21,10 +21,10 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
     const orders = await getAllOrders();
     dispatch(setOrders(orders));
   };
-
   return (
     <motion.div
-      {...staggerFadeInOut(index)}
+      {...staggerFadeInOut}
+      key={index}
       className="w-full flex flex-col items-start justify-start px-3 py-2 border relative border-gray-300 bg-lightOverlay drop-shadow-md rounded-md gap-4"
     >
       <div className="w-full flex items-center justify-between">
@@ -93,7 +93,7 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
           {data?.items &&
             data.items.map((item, j) => (
               <motion.div
-                {...staggerFadeInOut(j)}
+                {...staggerFadeInOut}
                 key={j}
                 className="flex items-center justify-center gap-1"
               >

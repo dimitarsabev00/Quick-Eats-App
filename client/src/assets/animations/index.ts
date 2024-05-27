@@ -20,12 +20,11 @@ export const slideIn = {
   exit: { opacity: 0, x: 30 },
 };
 
-export const staggerFadeInOut = (i: number) => {
+export const staggerFadeInOut = () => {
   return {
     initial: { opacity: 0, y: 50 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: 50 },
     transition: { duration: 0.3, delay: i * 0.15 },
-    key: { i },
   };
 };
