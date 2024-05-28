@@ -1,11 +1,11 @@
-import React from "react";
-import { NavLink } from "react-router-dom";
-import { Logo } from "../../assets";
-import { isActiveStyles, isNotActiveStyles } from "../../utils/helpers";
+import React from "react"
+import { NavLink } from "react-router-dom"
+import { Logo } from "../../assets"
+import { isActiveStyles, isNotActiveStyles } from "../../utils/helpers"
 
 const DBLeftSection: React.FC = () => {
   return (
-    <div className="h-full py-12 flex flex-col bg-lightOverlay backdrop-blur-md shadow-md min-w-210 w-300 gap-3">
+    <div className="h-full py-12 flex flex-col bg-lightOverlay backdrop-blur-md shadow-md w-full md:w-1/4 gap-3">
       <NavLink to={"/"} className="flex items-center justify-start px-6 gap-4">
         <img src={Logo} className="w-12" alt="" />
         <p className="font-semibold text-xl">Quick Eats App</p>
@@ -13,12 +13,12 @@ const DBLeftSection: React.FC = () => {
 
       <hr />
 
-      <ul className="flex flex-col gap-4">
+      <ul className="flex flex-col gap-4 px-6">
         <NavLink
           to={"/dashboard/home"}
           className={({ isActive }) =>
             isActive
-              ? `${isActiveStyles} px-4 py-2 border-l-8  border-red-500`
+              ? `${isActiveStyles} px-4 py-2 border-l-8 border-red-500`
               : isNotActiveStyles
           }
         >
@@ -28,7 +28,7 @@ const DBLeftSection: React.FC = () => {
           to={"/dashboard/orders"}
           className={({ isActive }) =>
             isActive
-              ? `${isActiveStyles} px-4 py-2 border-l-8  border-red-500`
+              ? `${isActiveStyles} px-4 py-2 border-l-8 border-red-500`
               : isNotActiveStyles
           }
         >
@@ -38,7 +38,7 @@ const DBLeftSection: React.FC = () => {
           to={"/dashboard/items"}
           className={({ isActive }) =>
             isActive
-              ? `${isActiveStyles} px-4 py-2 border-l-8  border-red-500`
+              ? `${isActiveStyles} px-4 py-2 border-l-8 border-red-500`
               : isNotActiveStyles
           }
         >
@@ -48,7 +48,7 @@ const DBLeftSection: React.FC = () => {
           to={"/dashboard/newItem"}
           className={({ isActive }) =>
             isActive
-              ? `${isActiveStyles} px-4 py-2 border-l-8  border-red-500`
+              ? `${isActiveStyles} px-4 py-2 border-l-8 border-red-500`
               : isNotActiveStyles
           }
         >
@@ -58,7 +58,7 @@ const DBLeftSection: React.FC = () => {
           to={"/dashboard/users"}
           className={({ isActive }) =>
             isActive
-              ? `${isActiveStyles} px-4 py-2 border-l-8  border-red-500`
+              ? `${isActiveStyles} px-4 py-2 border-l-8 border-red-500`
               : isNotActiveStyles
           }
         >
@@ -68,7 +68,7 @@ const DBLeftSection: React.FC = () => {
 
       <div className="w-full items-center justify-center flex h-225 mt-auto px-2 ">
         <div className="w-full h-full rounded-md bg-red-400 flex items-center justify-center flex-col gap-3 px-3">
-          <div className="w-12 h-12 borde bg-white rounded-full flex items-center justify-center">
+          <div className="w-12 h-12 bg-white rounded-full flex items-center justify-center">
             <p className="text-2xl font-bold text-red-500">?</p>
           </div>
           <p className="text-xl text-primary font-semibold">Help Center</p>
@@ -81,7 +81,7 @@ const DBLeftSection: React.FC = () => {
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default DBLeftSection;
+export default DBLeftSection

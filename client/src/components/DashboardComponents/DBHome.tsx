@@ -26,7 +26,7 @@ const DBHome: React.FC = () => {
     <div className="flex items-center justify-center flex-col pt-6 w-full h-full">
       <div className="grid w-full grid-cols-1 md:grid-cols-2 gap-4 h-full">
         <div className="flex items-center justify-center">
-          <div className="w-340 md:w-508">
+          <div className="w-full md:w-508">
             <CChart
               type="bar"
               data={{
@@ -59,7 +59,7 @@ const DBHome: React.FC = () => {
           </div>
         </div>
         <div className="w-full h-full flex items-center justify-center">
-          <div className="w-275 md:w-460">
+          <div className="w-full md:w-460">
             <CChart
               type="doughnut"
               data={{

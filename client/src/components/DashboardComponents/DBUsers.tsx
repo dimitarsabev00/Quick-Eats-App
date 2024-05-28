@@ -1,43 +1,43 @@
-import React, { useEffect } from "react";
-import { useAppDispatch, useAppSelector } from "../../store/hooks";
-import { collection, getDocs } from "@firebase/firestore";
-import { db } from "../../configs/firebase";
-import { DataTable } from "..";
-import { setAllUsers } from "../../store";
-import { Avatar } from "../../assets";
-import { User } from "../../Types";
+import React, { useEffect } from "react"
+import { useAppDispatch, useAppSelector } from "../../store/hooks"
+import { collection, getDocs } from "@firebase/firestore"
+import { db } from "../../configs/firebase"
+import { DataTable } from ".."
+import { setAllUsers } from "../../store"
+import { Avatar } from "../../assets"
+import { User } from "../../Types"
 
 const DBUsers: React.FC = () => {
-  const allUsers = useAppSelector(({ generalSlice }) => generalSlice.allUsers);
-  const mutableData = allUsers.map((user) => ({ ...user }));
+  const allUsers = useAppSelector(({ generalSlice }) => generalSlice.allUsers)
+  const mutableData = allUsers.map(user => ({ ...user }))
 
-  const dispatch = useAppDispatch();
+  const dispatch = useAppDispatch()
 
   const getAllUsers = async () => {
-    const usersCollectionRef = collection(db, "users");
-    const querySnapshot = await getDocs(usersCollectionRef);
-    const allUsers: User[] = querySnapshot.docs.map((doc) => {
-      const userData = doc.data();
+    const usersCollectionRef = collection(db, "users")
+    const querySnapshot = await getDocs(usersCollectionRef)
+    const allUsers: User[] = querySnapshot.docs.map(doc => {
+      const userData = doc.data()
       return {
         id: doc.id,
         createdAt: userData.createdAt,
         uid: userData.uid,
         email: userData.email,
-        photoURL: userData.photoURL,
-      };
-    });
+        photoURL: userData.photoURL
+      }
+    })
 
-    dispatch(setAllUsers(allUsers));
-  };
+    dispatch(setAllUsers(allUsers))
+  }
 
   useEffect(() => {
     if (!allUsers.length) {
-      getAllUsers();
+      getAllUsers()
     }
-  }, []);
+  }, [allUsers.length, dispatch])
 
   return (
-    <div className="flex items-center justify-self-center gap-4 pt-6 w-full">
+    <div className="flex items-center justify-center flex-col pt-6 w-full">
       <DataTable
         columns={[
           {
@@ -48,15 +48,15 @@ const DBUsers: React.FC = () => {
                 src={rowData.photoURL ? rowData.photoURL : Avatar}
                 className="w-32 h-16 object-contain rounded-md"
               />
-            ),
+            )
           },
           {
             title: "Name",
-            field: "displayName",
+            field: "displayName"
           },
           {
             title: "Email",
-            field: "email",
+            field: "email"
           },
           {
             title: "Verified",
@@ -69,8 +69,8 @@ const DBUsers: React.FC = () => {
               >
                 {rowData.emailVerified ? "Verified" : "Not Verified"}
               </p>
-            ),
-          },
+            )
+          }
         ]}
         data={mutableData}
         title="List of Users"
@@ -79,26 +79,20 @@ const DBUsers: React.FC = () => {
             icon: "edit",
             tooltip: "Edit Data",
             onClick: (_event: any, rowData: User) => {
-              alert("You want to edit " + rowData.email);
-            },
+              alert("You want to edit " + rowData.email)
+            }
           },
           {
             icon: "delete",
             tooltip: "Delete Data",
             onClick: (_event: any, rowData: User) => {
-              alert("You want to delete " + rowData.email);
-
-              // if (
-              //   window.confirm("Are you sure, you want to perform this action")
-              // ) {
-              //   // write deleteUser Functionality
-              // }
-            },
-          },
+              alert("You want to delete " + rowData.email)
+            }
+          }
         ]}
       />
     </div>
-  );
-};
+  )
+}
 
-export default DBUsers;
+export default DBUsers

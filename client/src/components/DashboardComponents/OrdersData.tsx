@@ -21,22 +21,23 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
     const orders = await getAllOrders();
     dispatch(setOrders(orders));
   };
+
   return (
     <motion.div
       {...staggerFadeInOut}
       key={index}
       className="w-full flex flex-col items-start justify-start px-3 py-2 border relative border-gray-300 bg-lightOverlay drop-shadow-md rounded-md gap-4"
     >
-      <div className="w-full flex items-center justify-between">
+      <div className="w-full flex items-center justify-between flex-wrap">
         <h1 className="text-xl text-headingColor font-semibold">Order</h1>
 
-        <div className=" flex items-center gap-4">
-          <p className="flex items-center gap-1 text-textColor">
+        <div className="flex items-center gap-4 overflow-scroll">
+          <p className="flex items-center gap-1 text-textColor whitespace-nowrap">
             Total : <HiCurrencyDollar className="text-lg text-red-500" />{" "}
             <span className="text-headingColor font-bold">{data?.total}</span>
           </p>
 
-          <p className="px-2 py-[2px] text-sm text-headingColor font-semibold capitalize  rounded-md bg-emerald-400 drop-shadow-md">
+          <p className="px-2 py-[2px] text-sm text-headingColor font-semibold capitalize rounded-md bg-emerald-400 drop-shadow-md">
             {data?.status}
           </p>
 
@@ -52,14 +53,16 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
 
           {admin && (
             <div className="flex items-center justify-center gap-2">
-              <p className="text-lg font-semibold text-headingColor">Mark As</p>
+              <p className="text-lg font-semibold text-headingColor whitespace-nowrap">
+                Mark As
+              </p>
 
               <motion.p
                 {...buttonClick}
                 onClick={() =>
                   handleClickUpdateOrderStatus(data.orderId, "preparing")
                 }
-                className={`text-orange-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer`}
+                className="text-orange-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer"
               >
                 Preparing
               </motion.p>
@@ -69,7 +72,7 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
                 onClick={() =>
                   handleClickUpdateOrderStatus(data.orderId, "cancelled")
                 }
-                className={`text-red-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer`}
+                className="text-red-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer"
               >
                 Cancelled
               </motion.p>
@@ -79,7 +82,7 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
                 onClick={() =>
                   handleClickUpdateOrderStatus(data.orderId, "delivered")
                 }
-                className={`text-emerald-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer`}
+                className="text-emerald-500 text-base font-semibold capitalize border border-gray-300 px-2 py-[2px] rounded-md cursor-pointer"
               >
                 Delivered
               </motion.p>
@@ -89,13 +92,13 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
       </div>
 
       <div className="flex items-center justify-start flex-wrap w-full">
-        <div className="flex items-center justify-center gap-4">
+        <div className="flex items-center justify-center gap-4 flex-wrap w-full md:w-auto">
           {data?.items &&
             data.items.map((item, j) => (
               <motion.div
                 {...staggerFadeInOut}
                 key={j}
-                className="flex items-center justify-center gap-1"
+                className="flex items-center gap-1 w-full md:w-auto"
               >
                 <img
                   src={item.imageURL}
@@ -122,7 +125,7 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
             ))}
         </div>
 
-        <div className="flex items-start justify-start flex-col gap-2 px-6 ml-auto w-full md:w-460">
+        <div className="flex items-start justify-start flex-col gap-2  ml-auto w-full md:w-460">
           <h1 className="text-lg text-headingColor font-semibold">
             {data.customer_details?.name}
           </h1>
