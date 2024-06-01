@@ -31,7 +31,7 @@ const OrdersData: React.FC<OrderDataProps> = ({ index, data, admin }) => {
       <div className="w-full flex items-center justify-between flex-wrap">
         <h1 className="text-xl text-headingColor font-semibold">Order</h1>
 
-        <div className="flex items-center gap-4 overflow-scroll">
+        <div className="flex items-center gap-4 md:overflow-hidden overflow-x-auto">
           <p className="flex items-center gap-1 text-textColor whitespace-nowrap">
             Total : <HiCurrencyDollar className="text-lg text-red-500" />{" "}
             <span className="text-headingColor font-bold">{data?.total}</span>
