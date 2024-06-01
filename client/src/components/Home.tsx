@@ -2,11 +2,18 @@ import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { buttonClick, staggerFadeInOut } from "../assets/animations";
 import { Delivery, Hero } from "../assets";
-import { useAppSelector } from "../store/hooks";
+import { useAppDispatch, useAppSelector } from "../store/hooks";
 import { Product } from "../Types";
+import { IoBasket } from "react-icons/io5";
+import { addItemToShoppingCart, getShoppingCart } from "../api";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { auth } from "../configs/firebase";
+import { toast } from "react-hot-toast";
+import { setShoppingCart } from "../store";
 
 const Home: React.FC = () => {
   const [randomProducts, setRandomProducts] = useState<Product[]>([]);
+  const [user] = useAuthState(auth);
 
   const products = useAppSelector(({ generalSlice }) => generalSlice.products);
 
@@ -19,6 +26,14 @@ const Home: React.FC = () => {
     const selectedProducts = getRandomProducts(products, 5);
     setRandomProducts(selectedProducts);
   }, [products]);
+
+  const dispatch = useAppDispatch()
+  const addProductToShoppingCart = async (data:Product) => {
+    await addItemToShoppingCart(user?.uid, data);
+    toast.success("Added to the cart");
+    const allItemsFromShoppingCart = await getShoppingCart(user?.uid);
+    dispatch(setShoppingCart(allItemsFromShoppingCart));
+  };
 
   return (
     <motion.div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -76,7 +91,6 @@ const Home: React.FC = () => {
                 <p className="text-sm lg:text-xl font-semibold text-textColor">
                   {data.product_name.slice(0, 14)}
                 </p>
-
                 <p className="text-[12px] text-center md:text-base text-lighttextGray font-semibold capitalize">
                   {data.product_category}
                 </p>
@@ -85,6 +99,13 @@ const Home: React.FC = () => {
                   <span className="text-xs text-red-600">$</span>{" "}
                   {data.product_price}
                 </p>
+                <motion.div
+          {...buttonClick}
+          onClick={()=>{addProductToShoppingCart(data)}}
+          className="w-8 h-8 rounded-full bg-red-500 flex items-center justify-center absolute top-[70%] right-2 cursor-pointer"
+        >
+          <IoBasket className="text-2xl text-primary" />
+        </motion.div>
               </motion.div>
             ))}
         </div>
