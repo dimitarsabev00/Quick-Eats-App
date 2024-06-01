@@ -1,11 +1,24 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { buttonClick, staggerFadeInOut } from "../assets/animations";
 import { Delivery, Hero } from "../assets";
 import { useAppSelector } from "../store/hooks";
+import { Product } from "../Types";
 
 const Home: React.FC = () => {
+  const [randomProducts, setRandomProducts] = useState<Product[]>([]);
+
   const products = useAppSelector(({ generalSlice }) => generalSlice.products);
+
+  const getRandomProducts = (products: Product[], count: number) => {
+    const shuffled = [...products].sort(() => 0.5 - Math.random());
+    return shuffled.slice(0, count);
+  };
+
+  useEffect(() => {
+    const selectedProducts = getRandomProducts(products, 5);
+    setRandomProducts(selectedProducts);
+  }, [products]);
 
   return (
     <motion.div className="w-full grid grid-cols-1 md:grid-cols-2 gap-4">
@@ -48,8 +61,8 @@ const Home: React.FC = () => {
         />
 
         <div className="w-full md:w-460 ml-0 mt-[5rem] flex flex-wrap items-center justify-center gap-4 gap-y-14">
-          {products &&
-            products.map((data) => (
+          {randomProducts &&
+            randomProducts.map((data) => (
               <motion.div
                 key={data.productId}
                 {...staggerFadeInOut}
